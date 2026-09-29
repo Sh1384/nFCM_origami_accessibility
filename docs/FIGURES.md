@@ -103,9 +103,11 @@ published PDF and PNG are version-controlled directly. `08_si_figures.py`
 confirms the files are present and warns if they are missing, rather than
 silently producing an incomplete figure set.
 
-The underlying analysis is reported in [`METRICS.md`](METRICS.md): silica 6 nt
-streptavidin Method 2 stays between 12.4 and 15.2 percent across V525-H
-threshold scalings from 0.6x to 1.25x.
+The underlying sensitivity analysis is summarised in
+[`GATING.md`](GATING.md): the silica 6 nt streptavidin result survives a large
+change in the V525-H threshold, giving a Method 2 excess of 14.27 percent at the
+threshold the paper uses and 10.42 percent at a threshold 1.55x higher, against
+a 1 percent null in both cases.
 
 ---
 

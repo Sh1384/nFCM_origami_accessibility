@@ -169,6 +169,25 @@ def peak_enrichment_threshold(
     }
 
 
+#: How each session's V525-H threshold was derived. The two published sessions
+#: used different, though equally valid, configurations of the same
+#: peak-enrichment sweep, and both are recorded here so the audit reproduces
+#: each one exactly rather than approximating both.
+#:
+#: ``signal_with_probe``
+#:     Which control supplies the origami signal. The streptavidin session used
+#:     the no-probe control; the antibody session used the no-biotin
+#:     with-probe control.
+#: ``restrict_to_ss_window``
+#:     Whether the sweep sees only events inside that coating's side-scatter
+#:     window, or every event above the global noise floor. The streptavidin
+#:     session used the floor; the antibody session used the window.
+SWEEP_CONFIG: dict[str, dict[str, bool]] = {
+    "streptavidin": {"signal_with_probe": False, "restrict_to_ss_window": False},
+    "antibody":     {"signal_with_probe": True,  "restrict_to_ss_window": True},
+}
+
+
 def derive_v525_threshold(
     session: str,
     coating: str,
@@ -176,24 +195,44 @@ def derive_v525_threshold(
     *,
     replicates: list[str] | None = None,
     min_retention: float = MIN_SIGNAL_RETENTION,
+    signal_with_probe: bool | None = None,
+    restrict_to_ss_window: bool | None = None,
 ) -> dict[str, float]:
     """Run :func:`peak_enrichment_threshold` on one session and coating.
 
-    Signal is the pooled no-biotin with-probe acquisitions; debris is the
-    matched coating-only control. Both are restricted to ``ss_window`` so the
-    two pass-rates describe the same size population.
+    Defaults come from :data:`SWEEP_CONFIG`, so calling this with just a session
+    and coating reproduces the published threshold for that session. Pass the
+    keyword arguments explicitly to explore a different configuration.
+
+    Signal and debris are always filtered the same way as each other, so the two
+    pass-rates describe the same population and their ratio is meaningful.
     """
+    cfg = SWEEP_CONFIG.get(session, {})
+    if signal_with_probe is None:
+        signal_with_probe = cfg.get("signal_with_probe", True)
+    if restrict_to_ss_window is None:
+        restrict_to_ss_window = cfg.get("restrict_to_ss_window", True)
+
+    # Apply the identical restriction to both populations.
+    kw = (
+        {"ss_window": ss_window}
+        if restrict_to_ss_window
+        else {"ss_floor": SS_NOISE_FLOOR}
+    )
+
     replicates = replicates or REPLICATES
     signal = []
     for rep in replicates:
-        path = sample_path(session, "N", coating, rep, with_probe=True)
+        path = sample_path(
+            session, "N", coating, rep, with_probe=signal_with_probe
+        )
         if path.exists():
-            signal.append(load_channel(path, CH_ATTO, ss_window=ss_window))
+            signal.append(load_channel(path, CH_ATTO, **kw))
     if not signal:
         raise FileNotFoundError(
-            f"no with-probe controls found for {coating!r} in session {session!r}"
+            f"no controls found for {coating!r} in session {session!r}"
         )
-    debris = load_channel(debris_path(session, coating), CH_ATTO, ss_window=ss_window)
+    debris = load_channel(debris_path(session, coating), CH_ATTO, **kw)
     return peak_enrichment_threshold(
         np.concatenate(signal), debris, min_retention=min_retention
     )

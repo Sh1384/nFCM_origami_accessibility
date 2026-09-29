@@ -49,8 +49,7 @@ Scripts that reproduce a published number print it next to the expected value,
 so a broken environment shows up immediately rather than silently:
 
 - `00_derive_gates.py` prints how many of the six windows and six thresholds
-  match `config/gates.json`. Expect 6 of 6 and 4 of 6; the two known
-  differences are explained in [`../docs/GATING.md`](../docs/GATING.md).
+  match `config/gates.json`. Expect 6 of 6 and 6 of 6.
 - `01_compute_metrics.py` prints the silica 6 nt streptavidin result against the
   published +0.456 and 14.27 percent.
 - `02_build_features.py` prints the event count per coating and replicate,

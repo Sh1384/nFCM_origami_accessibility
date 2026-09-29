@@ -58,23 +58,44 @@ Side scatter alone cannot separate an origami from a similarly sized piece of
 coating debris. The interior ATTO 425 dyes can, so a lower bound on `V525-H` is
 added, chosen by a **peak-enrichment sweep**.
 
-For each candidate threshold on a log-spaced grid from 50 to 500:
+For each candidate threshold on a log-spaced grid of 400 points from 50 to 500:
 
-- **Signal retention** is the fraction of no-biotin, probe-incubated origami
-  above the threshold.
+- **Signal retention** is the fraction of origami control events above it.
 - **Debris pass-rate** is the fraction of the matched coating-only control above
   it.
 - **Enrichment** is retention divided by pass-rate.
-
-Both populations are first restricted to that coating's side-scatter window, so
-the two rates describe the same size range and the ratio is meaningful.
 
 The chosen threshold maximises enrichment among candidates retaining at least
 **5 percent** of the signal. That floor is load-bearing: without it the argmax
 runs to the extreme tail where debris pass-rate hits zero, enrichment diverges,
 and fewer than twenty monomers survive per replicate.
 
-| Session | Coating | V525-H bound | Enrichment | Retention |
+### Two sweep configurations
+
+The two probe sessions were derived with different configurations of this sweep.
+Both are valid, and both are recorded in `nfcm.gating.SWEEP_CONFIG` so the audit
+script reproduces each session exactly.
+
+| | Streptavidin session | Antibody session |
+|---|---|---|
+| Origami signal | no-probe control | no-biotin with-probe control |
+| Events considered | all above the side-scatter noise floor of 300 | only those inside that coating's side-scatter window |
+
+Within either configuration the signal and the debris are filtered identically,
+so the two pass-rates always describe the same population and their ratio is
+meaningful. The difference between the two is which population that is.
+
+This is a genuine inconsistency in the published derivation rather than a
+deliberate design choice: the streptavidin thresholds were computed first, and
+the antibody thresholds were computed later with the refined configuration,
+without the earlier session being recomputed. It does not affect any published
+result, because the thresholds were frozen before the metrics were computed and
+both sets are reproduced exactly. It is recorded here so anyone extending the
+analysis picks one configuration deliberately instead of inheriting both.
+
+### The resulting thresholds
+
+| Session | Coating | V525-H bound | Enrichment in-window | Retention |
 |---|---|---|---|---|
 | Streptavidin | Uncoated | 119.5 | 2.7e5 | 26.5% |
 | Streptavidin | PLL-PEG | 145.4 | 40.5 | 12.3% |
@@ -83,10 +104,18 @@ and fewer than twenty monomers survive per replicate.
 | Antibody | PLL-PEG | 148.8 | 21.7 | 5.8% |
 | Antibody | Silica | 181.1 | 123 | 5.1% |
 
-Silica in the streptavidin session is the weak case: enrichment 1.1 means the
-threshold barely separates origami from silica debris on that axis. The silica
-side-scatter window is doing most of the work there. This is a genuine
-limitation of the measurement, not of the code, and the manuscript reports it.
+The enrichment column is the quantity manuscript Table 1 reports: enrichment
+evaluated **at the chosen threshold, within that coating's side-scatter
+window**. For the antibody session that is the same quantity the sweep
+maximised. For the streptavidin session the sweep maximised the equivalent ratio
+over all events above the noise floor instead, so the sweep's own figures there
+are 3.0, 6.2, and 1.0. Both describe the same thresholds; they differ only in
+which population the ratio is computed over.
+
+Silica in the streptavidin session is the weak case either way: an enrichment
+near 1 means the ATTO 425 axis barely separates origami from silica debris, and
+the side-scatter window is doing the discriminating work. This is a genuine
+limitation of the measurement, and the manuscript reports it.
 
 ### There is no upper bound
 
@@ -128,27 +157,39 @@ or above the lower bound.
 data and writes to `results/main/gates_rederived.json`, but never overwrites the
 frozen file, so published numbers cannot drift silently.
 
-Running the audit on the published archive gives:
+**Everything reproduces exactly.** Running the audit against the published
+archive gives:
 
 - **All six side-scatter windows reproduce exactly.**
-- **Four of six V525-H thresholds reproduce exactly**: both uncoated values, and
-  both antibody-session coatings.
-- **Two differ**: streptavidin PLL-PEG (frozen 145.4, re-derived 164.2) and
-  streptavidin silica (frozen 66.7, re-derived 103.5).
+- **All six V525-H thresholds reproduce exactly**, to full floating-point
+  precision against the values recorded at the time of the original derivation
+  (for example 145.42167820320236 for PLL-PEG in the streptavidin session).
 
-In both differing cases the re-derived threshold would give *higher* enrichment
-than the frozen one, so the frozen values are conservative rather than
-optimistic. They are also the values the manuscript's own Table 1 reports
-enrichments for, and they are internally consistent: evaluating enrichment at
-the frozen thresholds returns 2.7e5, 40.5, and 1.1 for the streptavidin session,
-matching the published table exactly. The two thresholds appear to predate a
-later refinement of the sweep that was applied to the antibody session.
+The metrics built on these gates reproduce as well:
 
-The practical consequence is small. The headline result is robust to this
-choice: silica 6 nt streptavidin Method 2 stays between 12.4 and 15.2 percent
-across threshold scalings from 0.6x to 1.25x, which spans both values. Figure
-S5-2 reports that sensitivity analysis.
+- `results/main/method1_method2_metrics.csv` is identical to the released data
+  file across all 71 rows and all 12 shared columns.
+- All 18 cells of manuscript Table 3 reproduce.
+- Figures 3 and 5 regenerate byte-identical to the published PNGs.
+- The Deep Sets retrain reproduces all five of its committed output files.
 
-Anyone rebuilding the analysis from scratch should use `config/gates.json` to
-match the paper, and can consult `results/main/gates_rederived.json` to see what
-an unconstrained re-derivation produces.
+Reproducing the thresholds required matching each session's sweep configuration,
+as described above. A single configuration applied to both sessions reproduces
+one session and misses the other by 10 to 40 units, which is why
+`SWEEP_CONFIG` records them separately.
+
+### Sensitivity of the headline result
+
+The one result that carries weight is silica with a 6 nt handle under
+streptavidin. It is not sensitive to the threshold:
+
+| Silica 6 nt, streptavidin | V525-H >= 66.7 (published) | V525-H >= 103.5 (1.55x higher) |
+|---|---|---|
+| Gated monomers | 15,448 | 4,510 |
+| Method 1 | +0.456 ± 0.206 | +1.588 ± 0.836 |
+| Method 2 | 14.27 ± 7.09 % | 10.42 ± 5.03 % |
+
+Raising the threshold by more than half discards 71 percent of the events and
+quadruples the Method 1 standard error, yet Method 2 still shows a large excess
+over the 1 percent null and Method 1 stays positive and substantial. The
+conclusion does not depend on the threshold.

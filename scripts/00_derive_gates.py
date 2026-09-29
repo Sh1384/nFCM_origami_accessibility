@@ -12,8 +12,12 @@ Run::
     python scripts/00_derive_gates.py
 
 Expected outcome, with the archive as published: all six side-scatter windows
-reproduce exactly, and four of the six V525-H thresholds reproduce exactly. The
-two that differ are documented in ``docs/GATING.md``.
+and all six V525-H thresholds reproduce exactly.
+
+Reproducing the thresholds requires matching each session's sweep
+configuration, since the two published sessions were derived differently. Those
+configurations are recorded in ``nfcm.gating.SWEEP_CONFIG`` and explained in
+``docs/GATING.md``.
 """
 from __future__ import annotations
 

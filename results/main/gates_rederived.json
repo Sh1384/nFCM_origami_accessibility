@@ -1,0 +1,78 @@
+{
+  "diagnostics": {
+    "streptavidin/NoCoating": {
+      "threshold": 119.51326734211958,
+      "enrichment": 265634.39567047503,
+      "signal_retention": 0.26563439567047503,
+      "debris_pass": 0.0
+    },
+    "streptavidin/PLL": {
+      "threshold": 164.15750062815232,
+      "enrichment": 54.10350790513834,
+      "signal_retention": 0.07279314888010541,
+      "debris_pass": 0.0013454423141607804
+    },
+    "streptavidin/Silica": {
+      "threshold": 103.45690405573949,
+      "enrichment": 1.4297440924616502,
+      "signal_retention": 0.10074997959547655,
+      "debris_pass": 0.07046714172604909
+    },
+    "antibody/NoCoating": {
+      "threshold": 120.20495917549857,
+      "enrichment": 180247.840781074,
+      "signal_retention": 0.18024784078107398,
+      "debris_pass": 0.0
+    },
+    "antibody/PLL": {
+      "threshold": 148.81757208156594,
+      "enrichment": 21.7147881952096,
+      "signal_retention": 0.05771023680775685,
+      "debris_pass": 0.0026576467745832327
+    },
+    "antibody/Silica": {
+      "threshold": 181.0786497559037,
+      "enrichment": 123.10273928867889,
+      "signal_retention": 0.05082689483430177,
+      "debris_pass": 0.00041288191577208916
+    }
+  },
+  "SS_S": {
+    "NoCoating": [
+      327,
+      644
+    ],
+    "PLL": [
+      326,
+      593
+    ],
+    "Silica": [
+      484,
+      1311
+    ]
+  },
+  "V525_S_LO": {
+    "NoCoating": 119.5,
+    "PLL": 164.2,
+    "Silica": 103.5
+  },
+  "SS_A": {
+    "NoCoating": [
+      328,
+      527
+    ],
+    "PLL": [
+      341,
+      768
+    ],
+    "Silica": [
+      399,
+      4710
+    ]
+  },
+  "V525_A_LO": {
+    "NoCoating": 120.2,
+    "PLL": 148.8,
+    "Silica": 181.1
+  }
+}

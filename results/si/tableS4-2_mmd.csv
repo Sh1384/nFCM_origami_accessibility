@@ -1,0 +1,7 @@
+Category,Comparison,MMD2,Pairs
+Within,Uncoated,0.043560874975143,3
+Within,PLL-PEG,0.0053196871735084654,3
+Within,Silica,0.0005550844012169333,3
+Between,Uncoated vs PLL-PEG,0.017887482193854578,9
+Between,Uncoated vs Silica,0.12426514696922486,9
+Between,PLL-PEG vs Silica,0.1284517275126062,9

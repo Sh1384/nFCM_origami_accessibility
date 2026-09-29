@@ -1,0 +1,61 @@
+# Analysis scripts
+
+Numbered in dependency order. Steps 00 to 02 build the inputs everything else
+reads; after those, the figure and table scripts are independent of each other
+except where noted.
+
+Every script takes its paths from `nfcm.paths`, so none contains an absolute
+path. Scripts that read FCS files call `require_data_root()` first and fail
+immediately with an instruction if the raw archive is not configured, rather
+than part-way through a long loop.
+
+```bash
+export NFCM_DATA_ROOT=/path/to/archive
+```
+
+## Order
+
+| # | Script | Purpose | Needs raw FCS | Runtime |
+|---|---|---|---|---|
+| 00 | `00_derive_gates.py` | Re-derive the monomer gate and audit it against the frozen `config/gates.json` | yes | ~2 min |
+| 01 | `01_compute_metrics.py` | Method 1, Method 2, total probe association, non-specific binding | yes | ~5 min |
+| 02 | `02_build_features.py` | Per-event feature matrices for the classifiers, cached as Parquet | yes | ~3 min |
+| 03 | `03_figure3_gating.py` | Figure 3, instrumentation and gating | yes | ~3 min |
+| 04 | `04_figure4_classifier.py` | Figure 4, label-free coating classifier | no | ~5 min |
+| 05 | `05_figure5_accessibility.py` | Figure 5 and standalone panel A | yes | ~4 min |
+| 06 | `06_si_statistics.py` | Supporting Information tables | no | <1 min |
+| 07 | `07_si_deepsets.py` | Deep Sets multi-particle aggregation | partly | ~30 min |
+| 08 | `08_si_figures.py` | The eleven Supporting Information figures | yes | ~8 min |
+
+Step 08 builds Figure S4-2 from the output of step 07, so run 07 first for a
+complete figure set. Step 08 also accepts figure keys to rebuild a subset:
+
+```bash
+python scripts/08_si_figures.py S3-1 S5-4
+```
+
+## Caching
+
+Steps 02 and 07 write to `cache/`, which is git-ignored and rebuildable. Step 02
+skips work when the cache exists; pass `--force` to rebuild. Delete the relevant
+file to force a recompute of anything downstream.
+
+## Self-checking
+
+Scripts that reproduce a published number print it next to the expected value,
+so a broken environment shows up immediately rather than silently:
+
+- `00_derive_gates.py` prints how many of the six windows and six thresholds
+  match `config/gates.json`. Expect 6 of 6 and 4 of 6; the two known
+  differences are explained in [`../docs/GATING.md`](../docs/GATING.md).
+- `01_compute_metrics.py` prints the silica 6 nt streptavidin result against the
+  published +0.456 and 14.27 percent.
+- `02_build_features.py` prints the event count per coating and replicate,
+  totalling 273,913.
+
+## What is not here
+
+Figure 2 is a microscopy, gel, and simulation composite assembled outside this
+pipeline, and Figure S5-2 predates the scripts kept here. Both published files
+are version-controlled under `figures/`. See
+[`../docs/FIGURES.md`](../docs/FIGURES.md).

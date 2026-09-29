@@ -1,0 +1,20 @@
+# Raw flow cytometry archive. Downloaded separately; see README.md.
+/data/
+*.fcs
+
+# Rebuildable caches: feature matrices, UMAP embeddings, trained weights.
+/cache/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+
+# OS and editor
+.DS_Store
+.idea/
+.vscode/

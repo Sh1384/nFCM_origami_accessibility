@@ -56,6 +56,19 @@ so a broken environment shows up immediately rather than silently:
 - `02_build_features.py` prints the event count per coating and replicate,
   totalling 273,913.
 
+## A note on the figure scripts
+
+The package under `nfcm/` holds the canonical definitions, and steps 00 to 02
+use it throughout. The figure scripts (03 to 05, 07, 08) additionally keep their
+own local style block and condition lists rather than importing
+`nfcm.style` and `nfcm.constants`.
+
+That is deliberate. Those literals are what produced the published figures, and
+Figures 3 and 5 currently regenerate byte-identical to the released PNGs.
+Routing them through the shared style would risk silent changes to panel
+geometry and colour for no scientific gain. New analysis should import from
+`nfcm/`; the figure scripts are kept as the record of what was published.
+
 ## What is not here
 
 Figure 2 is a microscopy, gel, and simulation composite assembled outside this

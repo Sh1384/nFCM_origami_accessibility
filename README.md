@@ -113,11 +113,14 @@ python scripts/08_si_figures.py           # the 11 Supporting Information figure
 | `01_compute_metrics.py` | FCS, `config/gates.json` | 3 CSVs in `results/main/` | ~5 min |
 | `02_build_features.py` | FCS | 2 Parquet files in `cache/` | ~3 min |
 | `03_figure3_gating.py` | FCS, gates | `figures/main/Fig3_*` | ~3 min |
-| `04_figure4_classifier.py` | `cache/` | `figures/main/Fig4_*`, AUC and importance CSVs | ~5 min |
-| `05_figure5_accessibility.py` | FCS, metrics | `figures/main/Fig5_*` | ~4 min |
-| `06_si_statistics.py` | `results/` | SI tables in `results/si/` | <1 min |
+| `04_figure4_classifier.py` | `cache/`, or FCS to rebuild it | `figures/main/Fig4_*`, AUC and importance CSVs | ~5 min |
+| `05_figure5_accessibility.py` | FCS, `results/main/` | `figures/main/Fig5_*` | ~4 min |
+| `06_si_statistics.py` | `results/`, `cache/` | SI tables in `results/si/` | <1 min |
 | `07_si_deepsets.py` | `cache/` | Deep Sets CSVs in `results/si/` | ~30 min |
-| `08_si_figures.py` | `results/`, `cache/`, FCS | 11 figures in `figures/supplementary/` | ~8 min |
+| `08_si_figures.py` | FCS, `results/`, `cache/` | 11 figures in `figures/supplementary/` | ~8 min |
+
+Steps 00 to 03 and 05 read the raw archive unconditionally. The others work from
+`cache/` and `results/`, so they rerun without it once those exist.
 
 Steps 02 and 07 cache their work. Delete the relevant file in `cache/` or pass
 `--force` to rebuild.

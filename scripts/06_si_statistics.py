@@ -28,14 +28,20 @@ from pathlib import Path as _Path
 _sys.path.insert(0, str(_Path(__file__).resolve().parents[1]))
 from nfcm.gating import load_gates
 from nfcm.paths import (
-    CACHE_DIR, CONFIG_DIR, FIGURES_MAIN, FIGURES_SI,
-    RESULTS_INTERMEDIATE, RESULTS_MAIN, RESULTS_SI, require_data_root,
+    CACHE_DIR, RESULTS_INTERMEDIATE, RESULTS_MAIN, RESULTS_SI,
 )
 
-#: Root of the raw FCS archive. See README.md for the download link and
-#: nfcm.paths.data_root for how the location is resolved.
-PROJ = str(require_data_root())
+# This script reads cached results, never the raw archive, so it needs no data
+# root. It does need the feature matrix from scripts/02_build_features.py for
+# the fluorescence ablation, so check for it up front and say so plainly rather
+# than failing later inside pandas.
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
+_FEATURES = CACHE_DIR / 'coating_features_3coat_fluor.parquet'
+if not _FEATURES.exists():
+    raise SystemExit(
+        f'missing feature matrix: {_FEATURES}\n'
+        'Run scripts/02_build_features.py first (it needs the raw FCS archive).'
+    )
 R   = str(RESULTS_INTERMEDIATE)
 OUT = str(RESULTS_SI); os.makedirs(OUT, exist_ok=True)
 C3=['NoCoating','PLL','Silica']

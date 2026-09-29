@@ -45,12 +45,13 @@ _sys.path.insert(0, str(_Path(__file__).resolve().parents[1]))
 from nfcm.gating import load_gates
 from nfcm.paths import (
     CACHE_DIR, CONFIG_DIR, FIGURES_MAIN, FIGURES_SI,
-    RESULTS_INTERMEDIATE, RESULTS_MAIN, RESULTS_SI, require_data_root,
+    RESULTS_INTERMEDIATE, RESULTS_MAIN, RESULTS_SI, data_root,
+    require_data_root,
 )
 
-#: Root of the raw FCS archive. See README.md for the download link and
-#: nfcm.paths.data_root for how the location is resolved.
-PROJ = str(require_data_root())
+#: Root of the raw FCS archive, resolved without asserting it exists.
+#: Only needed when the feature cache has to be rebuilt from raw FCS.
+PROJ = str(data_root())
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
 OUT  = str(FIGURES_MAIN)
 RES  = str(RESULTS_SI); os.makedirs(RES, exist_ok=True)
@@ -71,6 +72,8 @@ if os.path.exists(FEAT):
     df = pd.read_parquet(FEAT)
     print(f'loaded cached features: {len(df):,} events')
 else:
+    # Rebuilding the cache reads raw FCS, so the archive is required here.
+    require_data_root()
     rows = []
     for coat in COATINGS:
         for rep in REPS:

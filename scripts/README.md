@@ -15,17 +15,20 @@ export NFCM_DATA_ROOT=/path/to/archive
 
 ## Order
 
-| # | Script | Purpose | Needs raw FCS | Runtime |
+| # | Script | Purpose | Requires | Runtime |
 |---|---|---|---|---|
-| 00 | `00_derive_gates.py` | Re-derive the monomer gate and audit it against the frozen `config/gates.json` | yes | ~2 min |
-| 01 | `01_compute_metrics.py` | Method 1, Method 2, total probe association, non-specific binding | yes | ~5 min |
-| 02 | `02_build_features.py` | Per-event feature matrices for the classifiers, cached as Parquet | yes | ~3 min |
-| 03 | `03_figure3_gating.py` | Figure 3, instrumentation and gating | yes | ~3 min |
-| 04 | `04_figure4_classifier.py` | Figure 4, label-free coating classifier | no | ~5 min |
-| 05 | `05_figure5_accessibility.py` | Figure 5 and standalone panel A | yes | ~4 min |
-| 06 | `06_si_statistics.py` | Supporting Information tables | no | <1 min |
-| 07 | `07_si_deepsets.py` | Deep Sets multi-particle aggregation | partly | ~30 min |
-| 08 | `08_si_figures.py` | The eleven Supporting Information figures | yes | ~8 min |
+| 00 | `00_derive_gates.py` | Re-derive the monomer gate and audit it against the frozen `config/gates.json` | raw FCS | ~2 min |
+| 01 | `01_compute_metrics.py` | Method 1, Method 2, total probe association, non-specific binding | raw FCS | ~5 min |
+| 02 | `02_build_features.py` | Per-event feature matrices for the classifiers, cached as Parquet | raw FCS | ~3 min |
+| 03 | `03_figure3_gating.py` | Figure 3, instrumentation and gating | raw FCS | ~3 min |
+| 04 | `04_figure4_classifier.py` | Figure 4, label-free coating classifier | step 02 cache, or raw FCS to rebuild it | ~5 min |
+| 05 | `05_figure5_accessibility.py` | Figure 5 and standalone panel A | raw FCS, step 01 | ~4 min |
+| 06 | `06_si_statistics.py` | Supporting Information tables | step 01, step 02 cache | <1 min |
+| 07 | `07_si_deepsets.py` | Deep Sets multi-particle aggregation | step 02 cache; raw FCS optional for the cross-session block | ~30 min |
+| 08 | `08_si_figures.py` | The eleven Supporting Information figures | raw FCS, steps 01, 02, 06, 07 | ~8 min |
+
+Only steps 00 to 03 and 05 read the raw archive unconditionally. The rest work
+from `cache/` and `results/`, so they rerun without it once those exist.
 
 Step 08 builds Figure S4-2 from the output of step 07, so run 07 first for a
 complete figure set. Step 08 also accepts figure keys to rebuild a subset:

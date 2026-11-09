@@ -1,0 +1,57 @@
+batch,curve,sample,ss_bin_center,median_V525
+batch 1,Bare,Uncoated,249.7018623923161,62.74197653948314
+batch 1,Bare,Uncoated,389.2291459145959,74.26730112254708
+batch 1,Bare,Uncoated,606.7208573373771,84.83183407905194
+batch 1,Bare,Uncoated,945.741609003176,94.04881560958498
+batch 1,Bare,Uncoated,1474.19885138802,87.16609755191337
+batch 1,Bare,Uncoated,2297.9450547009387,78.52254145852214
+batch 1,Bare,Uncoated,3581.9804563357525,75.73024764252241
+batch 1,Bare,Uncoated,5583.503384175172,85.1745244600119
+batch 1,Bare,Uncoated,8703.428290892218,
+batch 1,Bare,Uncoated,13566.690803733278,
+batch 1,Bare,Uncoated,21147.425268811287,
+batch 1,Bare,Uncoated,32964.088440557214,
+batch 1,Bare,Uncoated,51383.61350870768,
+batch 1,Bare,Uncoated,80095.51794442459,
+batch 1,Silica-coated,Silica,249.7018623923161,56.51223324868338
+batch 1,Silica-coated,Silica,389.2291459145959,59.486497567742326
+batch 1,Silica-coated,Silica,606.7208573373771,61.9112699695367
+batch 1,Silica-coated,Silica,945.741609003176,63.23985049672172
+batch 1,Silica-coated,Silica,1474.19885138802,63.430103084467845
+batch 1,Silica-coated,Silica,2297.9450547009387,63.7143096584477
+batch 1,Silica-coated,Silica,3581.9804563357525,63.18482810446082
+batch 1,Silica-coated,Silica,5583.503384175172,63.18943597168085
+batch 1,Silica-coated,Silica,8703.428290892218,62.71912632309243
+batch 1,Silica-coated,Silica,13566.690803733278,66.24734614070616
+batch 1,Silica-coated,Silica,21147.425268811287,63.26640330732191
+batch 1,Silica-coated,Silica,32964.088440557214,
+batch 1,Silica-coated,Silica,51383.61350870768,
+batch 1,Silica-coated,Silica,80095.51794442459,
+batch 1,Silica precursors only,Silica chemicals only (raw),249.7018623923161,46.471923828125
+batch 1,Silica precursors only,Silica chemicals only (raw),389.2291459145959,55.97314453125
+batch 1,Silica precursors only,Silica chemicals only (raw),606.7208573373771,62.97607421875
+batch 1,Silica precursors only,Silica chemicals only (raw),945.741609003176,64.36279296875
+batch 1,Silica precursors only,Silica chemicals only (raw),1474.19885138802,65.800537109375
+batch 1,Silica precursors only,Silica chemicals only (raw),2297.9450547009387,64.7373046875
+batch 1,Silica precursors only,Silica chemicals only (raw),3581.9804563357525,62.775390625
+batch 1,Silica precursors only,Silica chemicals only (raw),5583.503384175172,60.149658203125
+batch 1,Silica precursors only,Silica chemicals only (raw),8703.428290892218,67.57470703125
+batch 1,Silica precursors only,Silica chemicals only (raw),13566.690803733278,64.6171875
+batch 1,Silica precursors only,Silica chemicals only (raw),21147.425268811287,67.40283203125
+batch 1,Silica precursors only,Silica chemicals only (raw),32964.088440557214,
+batch 1,Silica precursors only,Silica chemicals only (raw),51383.61350870768,
+batch 1,Silica precursors only,Silica chemicals only (raw),80095.51794442459,
+batch 1,Buffer,Buffer (raw),249.7018623923161,42.93798828125
+batch 1,Buffer,Buffer (raw),389.2291459145959,52.51904296875
+batch 1,Buffer,Buffer (raw),606.7208573373771,54.23681640625
+batch 1,Buffer,Buffer (raw),945.741609003176,62.5166015625
+batch 1,Buffer,Buffer (raw),1474.19885138802,58.5234375
+batch 1,Buffer,Buffer (raw),2297.9450547009387,62.09375
+batch 1,Buffer,Buffer (raw),3581.9804563357525,66.1357421875
+batch 1,Buffer,Buffer (raw),5583.503384175172,58.33935546875
+batch 1,Buffer,Buffer (raw),8703.428290892218,61.4521484375
+batch 1,Buffer,Buffer (raw),13566.690803733278,68.26171875
+batch 1,Buffer,Buffer (raw),21147.425268811287,60.6103515625
+batch 1,Buffer,Buffer (raw),32964.088440557214,68.583740234375
+batch 1,Buffer,Buffer (raw),51383.61350870768,
+batch 1,Buffer,Buffer (raw),80095.51794442459,

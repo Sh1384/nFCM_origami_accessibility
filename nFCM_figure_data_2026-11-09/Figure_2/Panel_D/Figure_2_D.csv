@@ -1,0 +1,9 @@
+batch,sample,replicate,scatter_events_per_s
+batch 1,Buffer,,33.75293473596096
+batch 1,Origami,A,413.97158066479943
+batch 1,Origami,B,307.1517246325185
+batch 1,Origami,C,664.206321096098
+batch 2,Buffer,,59.366861728390866
+batch 2,Origami,A,485.91146122075946
+batch 2,Origami,B,1408.1446528544986
+batch 2,Origami,C,782.6645875229532

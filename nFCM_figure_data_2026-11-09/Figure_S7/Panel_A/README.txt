@@ -1,6 +1,6 @@
-Figure S7, panel A: TEM of PLL-PEG-coated origami
+Figure S7, panel A: PLL-PEG gel retardation assay
 
-Plotted: TEM / gel / design image, cut from nFCM_2026-11-09_SI_JH.docx (media/image7.png)
+Plotted: TEM / gel / design image, cut from nFCM_2026-11-09_SI_JH.docx (media/image6.png)
 
 Source: figure image in the .docx
 

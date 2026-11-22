@@ -1,6 +1,6 @@
-Figure S8, panel B: Validation of the silica class averages
+Figure S8, panel B: Validation of the PLL-PEG class averages
 
-Plotted: TEM / gel / design image, cut from nFCM_2026-11-09_SI_JH.docx (media/image8.png)
+Plotted: TEM / gel / design image, cut from nFCM_2026-11-09_SI_JH.docx (media/image7.png)
 
 Source: figure image in the .docx
 

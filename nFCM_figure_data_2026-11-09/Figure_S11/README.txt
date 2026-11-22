@@ -1,7 +1,7 @@
 Figure S11
 
-Caption (11/09 draft):
-Figure S11. The median antibody signal does not report biotin-specific binding. Log2 fold change of the median antibody (B525-H) signal of origami events for origami displaying biotin on 3-, 6- or 12-bp stems, relative to the matched no-biotin origami incubated with antibody, for bare and PLL-PEG-coated origami. Bars show mean ± SD and points are replicates.
+Caption (11/09 draft, where this was Figure S10; figure numbers updated):
+Figure S11.  Median antibody (B525-H, Alexa Fluor 488) signal of scatter-triggered events with and without antibody for buffer, PLL-PEG-coated origami, and bare origami.
 
 Panels:
-  A  Median antibody signal shift  [data]
+  A  Antibody signal with and without antibody  [data]

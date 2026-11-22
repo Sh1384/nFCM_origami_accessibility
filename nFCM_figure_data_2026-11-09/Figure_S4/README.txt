@@ -5,3 +5,4 @@ Figure S4. Median side scatter of bare DNA origami. Median violet side scatter (
 
 Panels:
   A  Median side scatter of bare origami  [data]
+  B  Local slope of the cumulative side-scatter distribution of bare origami  [data]

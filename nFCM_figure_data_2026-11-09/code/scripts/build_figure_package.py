@@ -8,8 +8,13 @@ caption from the .docx. PACKAGE/panel_index.csv lists every panel.
 
 Data panels are computed from the FCS files (shared_utils.load_fcs; acquisitions above 7,000 events/s excluded) or read
 from the tables written by the analysis scripts (make_manuscript_figures.py, fig29*_tccd*.py, fig5g_delta_U_matched_lengths.py,
-fig37_proposed_flow_panels.py, adda/export_scattering_vs_coating.py, fig41_caption_stat_checks.py), which must be run first
+fig37_proposed_flow_panels.py, adda/export_scattering_vs_coating.py, fig41_caption_stat_checks.py, dilution_01_summarize.py),
+which must be run first
 (code/README.md in the package lists the order). Batch 1 = streptavidin session (05/25), batch 2 = antibody session (04/18).
+
+SI numbering: the dilution series was inserted as Figure S5 on 2026-11-21, so S5 to S17 of the 11/09 SI are S6 to S18 here.
+Figure S5 is drawn by fig_s5_dilution_series.py (D18 without tube labels) and keeps all 36 tubes: it is the one exception to the 7,000
+events/s exclusion.
 
 Environment (optional): NFCM_PACKAGE_DIR (output folder), NFCM_MAIN_DOCX, NFCM_SI_DOCX (figure images).
 Run:  python build_figure_package.py
@@ -24,6 +29,8 @@ from matplotlib.colors import LogNorm
 from PIL import Image
 from scipy import stats, optimize
 import fig37_proposed_flow_panels as P          # sets the plot style
+import fig_s4b_local_slope as S4B
+import fig_s5_dilution_series as S5
 import make_manuscript_figures as M
 from shared_utils import acq_time
 
@@ -42,6 +49,12 @@ LBL = {'NoCoating': 'bare', 'PLL': 'PLL-PEG', 'Silica': 'silica'}
 CO = {'Uncoated': 'NoCoating', 'PLL-PEG': 'PLL', 'Silica': 'Silica'}
 MK = {B1: '^', B2: 'o'}
 INDEX = []
+SI_INSERTED = 5                                                 # SI figure number added after the 11/09 draft
+S5_CAPTION = ('Figure S5. Scatter-triggered event rate (VSSC-1-H >= 200) of serially diluted bare DNA origami as a function of '
+              'nominal origami concentration, for three independent dilution chains (replicates 1 to 3) and for all three '
+              'together. Solid lines are fits of R = R_buffer + kC^alpha to each chain by least squares '
+              'on ln R; alpha is given as the slope with its 95% confidence interval. The dotted line is the mean rate of three '
+              'buffer acquisitions. All acquisitions are shown, including five above 7,000 events/s (3.3 and 1.65 nM).')
 rng = np.random.default_rng(7)
 _cache = {}
 
@@ -76,11 +89,13 @@ def panel_dir(fig, p):
     return d
 
 
-def write_panel(fig, p, title, how, source, fig_obj=None, tables=None, note='', image=None):
-    """Save one panel folder: SVG (matplotlib figure or embedded image), CSV tables and README."""
+def write_panel(fig, p, title, how, source, fig_obj=None, tables=None, note='', image=None, svg_writer=None, script=None):
+    """Save one panel folder: SVG (matplotlib figure, writer function or embedded image), CSV tables, script and README."""
     d = panel_dir(fig, p); stem = f'Figure_{fig}_{p}'
     svg = os.path.join(d, stem + '.svg')
-    if fig_obj is not None:
+    if svg_writer is not None:
+        svg_writer(svg)
+    elif fig_obj is not None:
         fig_obj.savefig(svg, bbox_inches='tight')
         if P.PREVIEW:
             fig_obj.savefig(os.path.join(P.PREVIEW, stem + '.png'), dpi=110, bbox_inches='tight')
@@ -97,9 +112,11 @@ def write_panel(fig, p, title, how, source, fig_obj=None, tables=None, note='', 
         fn = stem + ('.csv' if k == 0 else f'_{name}.csv')
         df.to_csv(os.path.join(d, fn), index=False); names.append(fn)
     kind = 'data' if tables else 'image'
+    if script:
+        shutil.copyfile(script, os.path.join(d, stem + '.py'))
     txt = [f'Figure {fig}, panel {p}: {title}', '', 'Plotted: ' + how, '', 'Source: ' + source]
     if names:
-        txt += ['', 'Files: ' + stem + '.svg, ' + ', '.join(names)]
+        txt += ['', 'Files: ' + stem + '.svg, ' + ', '.join(names + ([stem + '.py'] if script else []))]
     else:
         txt += ['', f'Files: {stem}.svg (cut from the figure image in the 11/09 .docx; no plotted data)']
     if note:
@@ -111,6 +128,12 @@ def write_panel(fig, p, title, how, source, fig_obj=None, tables=None, note='', 
 
 
 # ------------------------------------------------------------------------------------------------ figure images
+def si_number(text):
+    """Figure numbers of the 11/09 SI (S5 to S17) as numbered in this package (S6 to S18)."""
+    return re.sub(r'(?<![A-Za-z0-9])S(\d+)(?=[A-D]?(?![A-Za-z0-9]))',
+                  lambda m: f'S{int(m.group(1)) + 1}' if int(m.group(1)) >= SI_INSERTED else m.group(0), text)
+
+
 def docx_parts(which):
     z = zipfile.ZipFile(DOCX[which])
     x = z.read('word/document.xml').decode('utf8')
@@ -124,8 +147,8 @@ def docx_parts(which):
             last = [i for i in ids if not i.endswith('.svg')][0]
         t = text(p).strip()
         m = re.match(r'(Figure (S?\d+))\.', t)
-        if m and last and m.group(2) not in captions:
-            captions[m.group(2)] = t; images[m.group(2)] = last; last = None
+        if m and last and si_number(m.group(2)) not in captions:
+            key = si_number(m.group(2)); captions[key] = si_number(t); images[key] = last; last = None
     return z, images, captions
 
 
@@ -143,10 +166,10 @@ CROPS = {
     '3': {'A': (0, 0, .503, .352), 'B': (.518, 0, 1, .352), 'F': (0, .65, .335, 1)},
     '4': {'A': (0, 0, .325, .464)},
     '5': {'A': (0, 0, .35, .453)},
-    'S1': {'A': (0, 0, 1, 1)}, 'S2': {'A': (0, 0, 1, 1)}, 'S5': {'A': (0, 0, 1, 1)}, 'S6': {'A': (0, 0, 1, 1)},
+    'S1': {'A': (0, 0, 1, 1)}, 'S2': {'A': (0, 0, 1, 1)}, 'S6': {'A': (0, 0, 1, 1)}, 'S7': {'A': (0, 0, 1, 1)},
     'S3': {'A': (0, 0, .485, .351), 'B': (.485, 0, 1, .351), 'C': (0, .351, 1, 1)},
-    'S7': {'A': (0, 0, 1, .497), 'B': (0, .497, 1, 1)},
     'S8': {'A': (0, 0, 1, .497), 'B': (0, .497, 1, 1)},
+    'S9': {'A': (0, 0, 1, .497), 'B': (0, .497, 1, 1)},
 }
 IMAGE_TITLES = {
     ('1', 'A'): 'DNA origami box (schematic)', ('1', 'B'): 'Surface coatings (schematic)',
@@ -158,15 +181,15 @@ IMAGE_TITLES = {
     ('5', 'A'): 'Two-color coincidence detection (schematic)', ('S1', 'A'): 'scadnano design',
     ('S2', 'A'): 'Agarose gel of origami folding', ('S3', 'A'): 'TEM of bare origami at three magnifications',
     ('S3', 'B'): 'Aggregation on the grid', ('S3', 'C'): 'Validation of the bare class averages',
-    ('S5', 'A'): 'ATTO 425 spectra and the 525/50 band', ('S6', 'A'): 'PLL-PEG gel retardation assay',
-    ('S7', 'A'): 'TEM of PLL-PEG-coated origami', ('S7', 'B'): 'Validation of the PLL-PEG class averages',
-    ('S8', 'A'): 'TEM of silica-coated origami', ('S8', 'B'): 'Validation of the silica class averages',
+    ('S6', 'A'): 'ATTO 425 spectra and the 525/50 band', ('S7', 'A'): 'PLL-PEG gel retardation assay',
+    ('S8', 'A'): 'TEM of PLL-PEG-coated origami', ('S8', 'B'): 'Validation of the PLL-PEG class averages',
+    ('S9', 'A'): 'TEM of silica-coated origami', ('S9', 'B'): 'Validation of the silica class averages',
 }
 IMAGE_NOTES = {
     ('3', 'B'): 'The wall profiles and the FWHM / cavity / spacing table come from the class-average analysis (Methods, '
                 'TEM imaging), which is not among the files used here; ask for the profile table to add a CSV.',
     ('S3', 'B'): 'Box counts (1,112 boxes, six micrographs) come from the TEM picking analysis, not among the files used here.',
-    ('S5', 'A'): 'Spectra from fpbase.org; the spectra table is not among the files used here.',
+    ('S6', 'A'): 'Spectra from fpbase.org; the spectra table is not among the files used here.',
 }
 
 
@@ -180,7 +203,7 @@ def image_panels(captions_out):
             im = figure_image(z, images[fig]); w, h = im.size
             for p, (l, t, r, b) in boxes.items():
                 crop = im.crop((int(l * w), int(t * h), int(r * w), int(b * h)))
-                kind = 'TEM / gel / design image' if fig in ('2', '3', 'S1', 'S2', 'S3', 'S6', 'S7', 'S8') and (fig, p) != ('3', 'F') else 'schematic'
+                kind = 'TEM / gel / design image' if fig in ('2', '3', 'S1', 'S2', 'S3', 'S7', 'S8', 'S9') and (fig, p) != ('3', 'F') else 'schematic'
                 write_panel(fig, p, IMAGE_TITLES[(fig, p)], f'{kind}, cut from {os.path.basename(DOCX[which])} ({images[fig]})',
                             'figure image in the .docx', image=crop, note=IMAGE_NOTES.get((fig, p), ''))
 
@@ -490,6 +513,23 @@ def fig5():
 
 
 # ------------------------------------------------------------------------------------------------ SI figures
+def fig_s5():
+    A = pd.read_csv(os.path.join(FS, 'dilution', 'dilution_files.csv'), float_precision='round_trip')
+    A = A.assign(file='Dilution/' + A['sample'] + '.fcs', above_7000_events_per_s=A.events_per_s > 7000)
+    A = A[['sample', 'file', 'conc_nM', 'replicate', 'acq_order', 'acq_time_s', 'events', 'events_per_s', 'ss_events',
+           'ss_events_per_s', 'above_7000_events_per_s']]
+    buf, T = S5.analyze(pd.read_csv(io.StringIO(A.to_csv(index=False))))         # parsed as by Figure_S5_A.py
+    write_panel('S5', 'A', 'Serial dilution: event rate of each replicate series with its fit',
+                'scatter-triggered events/s (raw) against nominal concentration for each of the three dilution chains and for '
+                'all three together, with fits R = buffer + k C^alpha (least squares on ln R, buffer fixed at the mean of three '
+                'acquisitions); this is D18 without the tube labels. To redraw it, run python Figure_S5_A.py in this folder',
+                'dilution_01_summarize.py -> Figure_S5_A.py (fig_s5_dilution_series.py in code/scripts)',
+                svg_writer=lambda path: S5.draw(buf, T, path), script=S5.__file__,
+                tables={**T, 'acquisitions': A},
+                note='All 36 tubes are kept, by the decision of 2026-11-21, so this figure is exempt from the 7,000 events/s '
+                     'exclusion. a1, a2 (3.3 nM), a3, b1 and b2 (1.65 nM) exceed it; they are marked in _acquisitions.csv.')
+
+
 def si():
     T = tubes_table()
     z = T[T.coating.isin(['Buffer', 'bare'])]
@@ -503,6 +543,8 @@ def si():
                 '(n = 2) and the bare-origami tubes without probe (n = 6, batches 1 and 2); bar mean, error bar SD',
                 'build_figure_package.py si (same as fig02_median_ss_origami_vs_buffer.csv, column median_SS)', fig,
                 {'acquisitions': z[['batch', 'coating', 'replicate', 'file', 'median_VSSC1H']]})
+    S4B.write(write_panel)
+    fig_s5()
 
     Q = read(os.path.join('silica_side_scatter', 'fig22_scatter_fluorescence_quadrants.csv'))
     Q['quadrant'] = np.where(Q.fluorescence == 'High', 'F+', 'F−') + ' ' + np.where(Q.scatter == 'High', 'SS+', 'SS−')
@@ -516,7 +558,7 @@ def si():
                 ax.bar(i, q.get(qd, 0), 0.7, bottom=bottom, color=qc[qd], label=qd if i == 0 else None); bottom += q.get(qd, 0)
             xt.append(f"{'bare' if smpl.startswith('Unc') else coated.split()[0]}\n{'batch 1' if '05/25' in day else 'batch 2'}")
         ax.set_xticks(range(4)); ax.set_xticklabels(xt, fontsize=7); ax.set_ylabel('% of events'); ax.legend(fontsize=6.5, bbox_to_anchor=(1, 1), loc='upper left')
-        write_panel('S9', p, f"Quadrants, bare and {coated.split()[0]}-coated origami",
+        write_panel('S10', p, f"Quadrants, bare and {coated.split()[0]}-coated origami",
                     'percentage of scatter-triggered events in each scatter-fluorescence quadrant (SS+ above the bare-origami 95th '
                     'percentile of VSSC-1-H, F+ above the bare-origami median V525-H of the batch), buffer-subtracted, tubes pooled',
                     'make_manuscript_figures.py fig22 (silica_side_scatter/fig22_scatter_fluorescence_quadrants.csv)', fig,
@@ -542,7 +584,7 @@ def si():
             ax.scatter(x + jitter(len(v), 0.04), v, s=12, color=colr, edgecolor='white', lw=0.4, zorder=3)
     ax.set_xticks(range(3)); ax.set_xticklabels(['Bare origami', 'PLL-PEG coated', 'Buffer'], fontsize=7)
     ax.set_ylabel('Median B525-H'); ax.legend(fontsize=6.5)
-    write_panel('S10', 'A', 'Antibody signal with and without antibody',
+    write_panel('S11', 'A', 'Antibody signal with and without antibody',
                 'median B525-H of origami-gate scatter-triggered events without and with anti-biotin IgG (no-biotin origami, '
                 'antibody session; buffer-subtracted; points are tubes), and for buffer (04/18) and antibody only (03/13) in the '
                 'uncoated-origami gate (raw)', 'make_manuscript_figures.py fig08 (figures_svg/fig08_median_b525_with_without_antibody.csv)',
@@ -559,7 +601,7 @@ def si():
             ax.scatter(x + jitter(len(v), 0.04), v, s=12, color=COL[c], edgecolor='white', lw=0.4, zorder=3)
     ax.axhline(0, color=INK, lw=0.8); ax.set_xticks(range(3)); ax.set_xticklabels(['3', '6', '12']); ax.set_xlabel('Stem length (bp)')
     ax.set_ylabel('log$_2$ FC, median B525-H'); ax.legend()
-    write_panel('S11', 'A', 'Median antibody signal shift',
+    write_panel('S12', 'A', 'Median antibody signal shift',
                 'log2 of the median B525-H of origami-gate events of each biotin sample over that of the matched no-biotin sample '
                 '(same coating and replicate), antibody session; bar mean, error bar SD, points replicates',
                 'make_manuscript_figures.py fig13 (figures_svg/fig13_extension_dependence_antibody.csv, column M1_biotin_MFI_shift)',
@@ -578,7 +620,7 @@ def si():
             ax.scatter(v, y + jitter(len(v), 0.03), s=10, color=gc[g], zorder=3)
     ax.set_xscale('log'); ax.set_xlim(0.01, 1e4); ax.set_yticks(range(4)); ax.set_yticklabels(['All events', 'SS+', 'SS− and AB+', 'SS+ and AB+'])
     ax.set_xlabel('Events per second'); ax.legend(fontsize=6.5, loc='upper left', bbox_to_anchor=(1.0, 1.0))
-    write_panel('S12', 'A', 'Event rates of buffer, antibody and origami',
+    write_panel('S13', 'A', 'Event rates of buffer, antibody and origami',
                 'events per second of buffer (03/13), antibody only (03/13) and bare origami without antibody (04/18, tubes A to C; '
                 'bar mean, points tubes) for all events, scatter-triggered (SS+), fluorescence-triggered (SS− and AB+) and '
                 'SS >= 200 with B525-H >= 250 (SS+ and AB+)', 'make_manuscript_figures.py fig10 (figures_svg/fig10_free_antibody_rates.csv)',
@@ -596,7 +638,7 @@ def si():
             ax.scatter(x + jitter(len(v), 0.04), v, s=12, color=COL[CO[c]], edgecolor='white', lw=0.4, zorder=3)
     ax.set_xticks(range(4)); ax.set_xticklabels(['N', '3', '6', '12']); ax.set_xlabel('Stem length (bp; N, no biotin)')
     ax.set_ylabel('Observed / chance coincidences'); ax.legend(fontsize=6.5, ncol=2, loc='lower center', bbox_to_anchor=(0.5, 1.0))
-    write_panel('S13', 'A', 'Observed-to-chance coincidence of origami and antibody',
+    write_panel('S14', 'A', 'Observed-to-chance coincidence of origami and antibody',
                 'observed coincident events over the chance expectation (Equation 1) for each antibody sample, bare and PLL-PEG, '
                 'without biotin (N) and with 3, 6 or 12 bp stems; bar mean, error bar SD, points replicates (one PLL-PEG 12 bp sample '
                 'without detectable origami excluded)', 'fig29_tccd_coincidence.py (figures_svg/fig29_tccd_coincidence_samples.csv, column obs_exp_deficit)',
@@ -611,7 +653,7 @@ def si():
         ax.scatter(v, i + jitter(len(v), 0.05), s=16, color=COL['Silica'], zorder=3)
     ax.axvline(0, color=INK, lw=0.8); ax.set_yticks(range(3)); ax.set_yticklabels(['3', '6', '12']); ax.set_ylabel('Stem length (bp)')
     ax.set_xlabel('Coincidence excess (% of origami)')
-    write_panel('S14', 'A', 'Silica-coated origami: coincidence excess',
+    write_panel('S15', 'A', 'Silica-coated origami: coincidence excess',
                 'biotin-specific coincidence excess (Equation 4) of each silica-coated antibody sample relative to its matched no-biotin '
                 'sample; bar mean, error bar SD, points replicates (3_Silica_AB_C excluded at > 7,000 events/s)',
                 'fig29_tccd_coincidence.py -> fig29d_tccd_ddG.py (figures_svg/fig29d_tccd_ddG_samples.csv)', fig,
@@ -626,7 +668,7 @@ def si():
     pc = ax.pcolormesh(xe, ye, h.T, norm=LogNorm(), cmap='Blues', rasterized=True)
     ax.set_xscale('log'); ax.set_yscale('log'); ax.set_xlabel('VSSC-1-H'); ax.set_ylabel('B525-H (AF488)')
     fig.colorbar(pc, ax=ax).set_label('events/s per bin', fontsize=8)
-    write_panel('S15', 'A', 'Streptavidin only: B525-H vs side scatter',
+    write_panel('S16', 'A', 'Streptavidin only: B525-H vs side scatter',
                 'events per second per log bin of VSSC-1-H and B525-H for streptavidin without origami (probe_only_controls/'
                 'Streptavidin_Only__Shervin5_03.fcs; all recorded events)', 'make_manuscript_figures.py fig11 (figures_svg/fig11_free_streptavidin_maps.csv)',
                 fig, {'bins': Mp})
@@ -641,33 +683,33 @@ def si():
             ax.bar(i + (k - 0.5) * 0.36, v.mean(), 0.32, color=colr, label=g if i == 0 else None)
     ax.set_yscale('log'); ax.set_xticks(range(4)); ax.set_xticklabels(['All events', 'SS+ and SA+', 'SS+', 'SS− and SA+'], rotation=30, ha='right', fontsize=7)
     ax.set_ylabel('Events per second'); ax.legend(fontsize=6.5)
-    write_panel('S15', 'B', 'Streptavidin only: event rates',
+    write_panel('S16', 'B', 'Streptavidin only: event rates',
                 'events per second of streptavidin only and buffer (05/03) for all events, SS >= 200 with B525-H >= 256 (SS+ and SA+), '
                 'scatter-triggered (SS+) and fluorescence-triggered (SS− and SA+); 256 is the B525 trigger read from the file',
                 'make_manuscript_figures.py fig11 (figures_svg/fig11_free_streptavidin_rates.csv)', fig, {'rates': Rs})
 
     A = read(os.path.join('proposed_panels', 'fig5f_run_order_check_acquisitions.csv')); A = A[A.valid]
-    for fig_id, sub, title in [('S16', A[A.extension.astype(str) == 'N'], 'no-biotin origami over the session'),
-                               ('S17', A, 'all antibody samples versus acquisition time')]:
+    for fig_id, sub, title in [('S17', A[A.extension.astype(str) == 'N'], 'no-biotin origami over the session'),
+                               ('S18', A, 'all antibody samples versus acquisition time')]:
         for p, col, ylab in [('A', 'observed_over_chance', 'Observed / chance'), ('B', 'antibody_events_per_s', 'Antibody events/s')]:
             fig, ax = plt.subplots(figsize=(4.2, 2.4))
             for (c, r), q in sub.groupby(['coating', 'replicate']):
                 q = q.sort_values('hours_since_first_acquisition'); colr = COL[CO[c]]
-                if fig_id == 'S17':
+                if fig_id == 'S18':
                     ax.plot(q.hours_since_first_acquisition, q[col], color=colr, lw=1)
                     for mk, e in zip('osD^', ['N', '3', '6', '12']):
                         w = q[q.extension.astype(str) == e]; ax.plot(w.hours_since_first_acquisition, w[col], marker=mk, ls='', ms=4, color=colr)
                 else:
                     ax.plot(q.hours_since_first_acquisition, q[col], marker='o', ls='', ms=4, color=colr)
             hs = [plt.Line2D([], [], color=COL[CO[c]], marker='o', ls='', label=c if c != 'Uncoated' else 'bare') for c in ['Uncoated', 'PLL-PEG', 'Silica']]
-            if fig_id == 'S17':
+            if fig_id == 'S18':
                 hs += [plt.Line2D([], [], color=MUTED, marker=mk, ls='', label=lab) for mk, lab in zip('osD^', ['no biotin', '3 bp', '6 bp', '12 bp'])]
             ax.legend(handles=hs, fontsize=6, ncol=len(hs), loc='upper center', bbox_to_anchor=(0.5, 1.22), frameon=False)
             ax.set_xlabel('Hours since the start of acquisition'); ax.set_ylabel(ylab)
             write_panel(fig_id, p, f"{ylab}, {title}",
                         f"{'observed-to-chance coincidence ratio' if p == 'A' else 'antibody event rate (B525-H >= 250, buffer-subtracted)'} of each "
-                        f"{'no-biotin ' if fig_id == 'S16' else ''}antibody sample against its start time (hours after the first acquisition of the "
-                        f"session){'; lines join the samples of one coating and replicate set in acquisition order' if fig_id == 'S17' else ''}",
+                        f"{'no-biotin ' if fig_id == 'S17' else ''}antibody sample against its start time (hours after the first acquisition of the "
+                        f"session){'; lines join the samples of one coating and replicate set in acquisition order' if fig_id == 'S18' else ''}",
                         'fig37_proposed_flow_panels.py panel_5f (proposed_panels/fig5f_run_order_check_acquisitions.csv)', fig, {'acquisitions': sub})
 
 
@@ -690,7 +732,13 @@ def main():
     Ix = Ix.iloc[sorted(range(len(Ix)), key=lambda i: (order(Ix.figure.iloc[i]), Ix.panel.iloc[i]))]
     Ix.to_csv(os.path.join(PKG, 'panel_index.csv'), index=False)
     for fig, z in Ix.groupby('figure'):
-        lines = [f'Figure {fig}', '', 'Caption (11/09 draft):', captions.get(fig, '(not found)'), '', 'Panels:']
+        head, cap = 'Caption (11/09 draft):', captions.get(fig, '(not found)')
+        n = int(fig[1:]) if fig.startswith('S') else 0
+        if n == SI_INSERTED:
+            head, cap = 'Suggested caption (new figure, 2026-11-21):', S5_CAPTION
+        elif n > SI_INSERTED:
+            head = f'Caption (11/09 draft, where this was Figure S{n - 1}; figure numbers updated):'
+        lines = [f'Figure {fig}', '', head, cap, '', 'Panels:']
         lines += [f'  {r.panel}  {r.title}  [{r.kind}]' for r in z.itertuples()]
         open(os.path.join(PKG, f'Figure_{fig}', 'README.txt'), 'w', encoding='utf8').write('\n'.join(lines) + '\n')
     print(f'{len(Ix)} panels written to {PKG}')

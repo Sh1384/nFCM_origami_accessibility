@@ -1,0 +1,9 @@
+batch,sample,replicate,file,acq_time_s,recorded_events,events_ge_200
+batch 1,bare,A,Shervin5_25/N_NoCoating_NoS_A.fcs,99.33049011230469,48968,41120
+batch 1,bare,B,Shervin5_25/N_NoCoating_NoS_B.fcs,77.87356567382812,29043,23919
+batch 1,bare,C,Shervin5_25/N_NoCoating_NoS_C.fcs,74.25855255126953,53989,49323
+batch 1,buffer,,Shervin5_25/Buffer.fcs,80.4967041015625,10937,2717
+batch 2,bare,A,Shervin4_18/N_NoCoating_NoAB_A.fcs,112.93003845214844,54929,54874
+batch 2,bare,B,Shervin4_18/N_NoCoating_NoAB_B.fcs,79.54793548583984,112058,112015
+batch 2,bare,C,Shervin4_18/N_NoCoating_NoAB_C.fcs,77.53385162353516,60738,60683
+batch 2,buffer,,Shervin4_18/Buffer.fcs,67.2934341430664,4025,3995

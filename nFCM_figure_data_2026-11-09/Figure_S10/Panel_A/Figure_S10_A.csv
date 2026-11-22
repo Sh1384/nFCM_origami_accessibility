@@ -1,15 +1,17 @@
-group,condition,replicate,median_B525,value
-Bare origami,No antibody,A,60.53540729397413,buffer-subtracted
-Bare origami,No antibody,B,65.49128033198042,buffer-subtracted
-Bare origami,No antibody,C,65.08035087049693,buffer-subtracted
-Bare origami,With antibody,A,128.61388752934124,buffer-subtracted
-Bare origami,With antibody,B,120.05592574264314,buffer-subtracted
-Bare origami,With antibody,C,150.3297991823715,buffer-subtracted
-PLL-PEG coated,No antibody,A,62.83902505343579,buffer-subtracted
-PLL-PEG coated,No antibody,B,64.77820065876828,buffer-subtracted
-PLL-PEG coated,No antibody,C,65.17272152931562,buffer-subtracted
-PLL-PEG coated,With antibody,A,113.56053192334622,buffer-subtracted
-PLL-PEG coated,With antibody,B,103.42905797851728,buffer-subtracted
-PLL-PEG coated,With antibody,C,112.31950392867932,buffer-subtracted
-Buffer,No antibody,,50.51708984375,"raw, Buffer (04/18)"
-Buffer,With antibody,,85.291015625,"raw, antibody only (03/13)"
+day,session,sample,fluorescence,scatter,events_per_s,pct_of_events,ss_cut,v525_cut,note,quadrant
+Day 1 (05/25),Streptavidin session (05/25),Uncoated origami,High,Low,205.0783397813464,48.70821910280197,449.3240051269531,63.14599609375,"buffer-subtracted, replicates pooled",F+ SS−
+Day 1 (05/25),Streptavidin session (05/25),Uncoated origami,High,High,12.83268314657732,3.0478944926448857,449.3240051269531,63.14599609375,"buffer-subtracted, replicates pooled",F+ SS+
+Day 1 (05/25),Streptavidin session (05/25),Uncoated origami,Low,Low,200.9401032304376,47.7253452759717,449.3240051269531,63.14599609375,"buffer-subtracted, replicates pooled",F− SS−
+Day 1 (05/25),Streptavidin session (05/25),Uncoated origami,Low,High,2.1832363349887274,0.5185411285814493,449.3240051269531,63.14599609375,"buffer-subtracted, replicates pooled",F− SS+
+Day 1 (05/25),Streptavidin session (05/25),Silica origami,High,Low,659.4210691364402,17.12399536508866,449.3240051269531,63.14599609375,"buffer-subtracted, replicates pooled",F+ SS−
+Day 1 (05/25),Streptavidin session (05/25),Silica origami,High,High,1125.1373337104972,29.21782058431664,449.3240051269531,63.14599609375,"buffer-subtracted, replicates pooled",F+ SS+
+Day 1 (05/25),Streptavidin session (05/25),Silica origami,Low,Low,919.7668171617888,23.8847125929214,449.3240051269531,63.14599609375,"buffer-subtracted, replicates pooled",F− SS−
+Day 1 (05/25),Streptavidin session (05/25),Silica origami,Low,High,1146.5346703228658,29.773471457673296,449.3240051269531,63.14599609375,"buffer-subtracted, replicates pooled",F− SS+
+Day 2 (04/18),Antibody session (04/18),Uncoated origami,High,Low,383.19086300410726,48.910355620897874,509.5633544921875,72.927734375,"buffer-subtracted, replicates pooled",F+ SS−
+Day 2 (04/18),Antibody session (04/18),Uncoated origami,High,High,24.85720453380108,3.1727654045774427,509.5633544921875,72.927734375,"buffer-subtracted, replicates pooled",F+ SS+
+Day 2 (04/18),Antibody session (04/18),Uncoated origami,Low,Low,378.30229651013485,48.28638060275128,509.5633544921875,72.927734375,"buffer-subtracted, replicates pooled",F− SS−
+Day 2 (04/18),Antibody session (04/18),Uncoated origami,Low,High,-2.894880767153426,-0.3695016282265949,509.5633544921875,72.927734375,"buffer-subtracted, replicates pooled",F− SS+
+Day 2 (04/18),Antibody session (04/18),Silica origami,High,Low,261.9580988046791,36.83593758076631,509.5633544921875,72.927734375,"buffer-subtracted, replicates pooled",F+ SS−
+Day 2 (04/18),Antibody session (04/18),Silica origami,High,High,54.19928924288739,7.621377787451089,509.5633544921875,72.927734375,"buffer-subtracted, replicates pooled",F+ SS+
+Day 2 (04/18),Antibody session (04/18),Silica origami,Low,Low,332.41977501202336,46.74409433733665,509.5633544921875,72.927734375,"buffer-subtracted, replicates pooled",F− SS−
+Day 2 (04/18),Antibody session (04/18),Silica origami,Low,High,62.57101453277073,8.798590294445956,509.5633544921875,72.927734375,"buffer-subtracted, replicates pooled",F− SS+

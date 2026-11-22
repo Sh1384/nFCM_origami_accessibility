@@ -10,7 +10,7 @@ Q3  a  Silica vs bare median side scatter of origami-confident events, batch 1 (
     b  No-biotin observed-to-chance ratio rho0, bare vs PLL-PEG (antibody session): recomputed here with the same gate,
        buffer subtraction and coincidence window as fig29_tccd_coincidence.py, and without buffer subtraction;
        Welch, Student and paired t-tests on the three samples per coating.
-Q4  Bare origami without probe, recorded side scatter (Figure S4A), from the raw events, per tube and pooled:
+Q4  Bare origami without probe, recorded side scatter (as in Figures 2C and S4B), from the raw events, per tube and pooled:
        slope at 200    -d ln N(>=s) / d ln s of the cumulative count between 200 and 200 x 10^0.05, raw and minus the
                        session buffer (scaled by acquisition time); this sets how the scatter-triggered event rate
                        responds to a small change in scatter
@@ -348,7 +348,7 @@ def q4():
             label='line fit 200 to 95th pct (batch 1)')
     ax.set_xscale('log'); ax.set_yscale('log'); ax.set_xlim(TRIG, 3e4); ax.set_ylim(1e-2, 3e3)
     ax.set_xlabel('VSSC-1-H, s'); ax.set_ylabel('events/s with VSSC-1-H ≥ s')
-    ax.legend(fontsize=6.3, loc='upper right'); ax.set_title('A  bare origami without probe (S4A)', fontsize=8, loc='left')
+    ax.legend(fontsize=6.3, loc='upper right'); ax.set_title('A  bare origami without probe', fontsize=8, loc='left')
     ax = axes[1]
     for sess, mk in [(B1, 'o'), (B2, 's')]:
         z = Loc[Loc.batch == BLAB[sess]]

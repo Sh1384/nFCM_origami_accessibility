@@ -15,6 +15,7 @@ The scripts find their inputs and outputs relative to the folder that contains `
 
 ```
 <folder>/
+  ../Dilution/   FCS files and FileInfo.csv of the dilution series (or set NFCM_DILUTION_DIR)
   Data/          FCS files: Shervin4_18 (batch 2, antibody), Shervin5_25 (batch 1, streptavidin),
                  probe_only_controls, coatings_controls
   scripts/       these scripts
@@ -26,7 +27,8 @@ In `nFCM Manuscript/` this layout already exists. To run this copy, put `Data/` 
 writes to `NFCM_PACKAGE_DIR`, and reads the figure images from `NFCM_MAIN_DOCX` and `NFCM_SI_DOCX`. Each of these defaults to
 the `ShervinCode_Data` folder.
 
-Throughout the code, acquisitions above 7,000 events/s are excluded (`shared_utils.load_fcs`), the scatter trigger is
+Acquisitions above 7,000 events/s are excluded (`shared_utils.load_fcs`) everywhere except in the dilution series
+(`dilution_*.py`, Figure S5), which keeps all tubes. Throughout the code, the scatter trigger is
 VSSC-1-H ≥ 200, and the antibody threshold is B525-H ≥ 250.
 
 ## Run order
@@ -43,7 +45,7 @@ python fig29c_tccd_percent_bound.py
 python fig29d_tccd_ddG.py
 python fig35_antibody_length_dependence.py
 python fig5g_delta_U_matched_lengths.py
-# 3  Panels 5B and the run-order table (S16, S17)
+# 3  Panels 5B and the run-order table (S17, S18)
 python fig37_proposed_flow_panels.py 5b 5f
 # 4  Light-scattering simulations (ADDA; results are already in figures_svg/fig32_adda_scattering_cases.csv)
 python adda/make_geometries.py
@@ -51,8 +53,13 @@ python adda/run_adda.py
 python adda/collect_adda.py
 python model_coating_scattering.py
 python adda/export_scattering_vs_coating.py
-# 5  Figure folders
+# 5  Serial dilution (Figure S5)
+python dilution_01_summarize.py
+# to redraw S5 alone: python Figure_S5_A.py in Figure_S5/Panel_A
+# 6  Figure folders
 python build_figure_package.py
+# Figure S4B alone, without rebuilding the other folders
+python fig_s4b_local_slope.py
 ```
 
 ## Which script makes each panel
@@ -67,18 +74,20 @@ python build_figure_package.py
 | 4F, 4G | `pll_peg_side_scatter/fig21_..._median_v525_by_ss.csv` | `make_manuscript_figures.py` `fig21` |
 | 5B | `proposed_panels/fig5b_..._samples.csv` | `fig37_proposed_flow_panels.py` `panel_5b` |
 | 5C | FCS file (antibody only) | `build_figure_package.py` `fig5` |
-| 5D, 5E, S14 | `fig29d_tccd_ddG_samples.csv` | `fig29_tccd_coincidence.py`, then `fig29c`, then `fig29d` |
+| 5D, 5E, S15 | `fig29d_tccd_ddG_samples.csv` | `fig29_tccd_coincidence.py`, then `fig29c`, then `fig29d` |
 | 5F | `fig5g_delta_U_matched_lengths.csv` | `fig29*`, `tccd_acquisition_order.py`, `fig35_...`, `fig5g_delta_U_matched_lengths.py` |
-| S4 | FCS files | `build_figure_package.py` `si` |
-| S9 | `silica_side_scatter/fig22_scatter_fluorescence_quadrants.csv` | `make_manuscript_figures.py` `fig22` |
-| S10 | `fig08_median_b525_with_without_antibody.csv` | `make_manuscript_figures.py` `fig08` |
-| S11 | `fig13_extension_dependence_antibody.csv` (column M1) | `make_manuscript_figures.py` `fig13` |
-| S12 | `fig10_free_antibody_rates.csv` | `make_manuscript_figures.py` `fig10` |
-| S13 | `fig29_tccd_coincidence_samples.csv` | `fig29_tccd_coincidence.py` |
-| S15 | `fig11_free_streptavidin_maps.csv`, `_rates.csv` | `make_manuscript_figures.py` `fig11` |
-| S16, S17 | `proposed_panels/fig5f_run_order_check_acquisitions.csv` | `fig29_tccd_coincidence.py`, `tccd_acquisition_order.py`, `fig37_proposed_flow_panels.py` `panel_5f` |
+| S4A | FCS files | `build_figure_package.py` `si` |
+| S4B | FCS files | `fig_s4b_local_slope.py` (also run by `build_figure_package.py`) |
+| S5 | `dilution/dilution_files.csv` | `dilution_01_summarize.py`, then `fig_s5_dilution_series.py` (saved in the panel folder as `Figure_S5_A.py`) |
+| S10 | `silica_side_scatter/fig22_scatter_fluorescence_quadrants.csv` | `make_manuscript_figures.py` `fig22` |
+| S11 | `fig08_median_b525_with_without_antibody.csv` | `make_manuscript_figures.py` `fig08` |
+| S12 | `fig13_extension_dependence_antibody.csv` (column M1) | `make_manuscript_figures.py` `fig13` |
+| S13 | `fig10_free_antibody_rates.csv` | `make_manuscript_figures.py` `fig10` |
+| S14 | `fig29_tccd_coincidence_samples.csv` | `fig29_tccd_coincidence.py` |
+| S16 | `fig11_free_streptavidin_maps.csv`, `_rates.csv` | `make_manuscript_figures.py` `fig11` |
+| S17, S18 | `proposed_panels/fig5f_run_order_check_acquisitions.csv` | `fig29_tccd_coincidence.py`, `tccd_acquisition_order.py`, `fig37_proposed_flow_panels.py` `panel_5f` |
 
-Panels 1A–D, 2A, 3A, 3B, 3F, 4A, 5A, S1, S2, S3, S5, S6, S7 and S8 are schematics, micrographs, gels or designs. They are cut
+Panels 1A–D, 2A, 3A, 3B, 3F, 4A, 5A, S1, S2, S3, S6, S7, S8 and S9 are schematics, micrographs, gels or designs. They are cut
 from the figure images in the .docx files.
 
 ## Numbers in the text and where they come from
@@ -91,6 +100,11 @@ from the figure images in the .docx files.
 | Conclusions unchanged with a common origami-gate upper bound (510 or 810); mixed models | `comment_checks_10_24.py` |
 | Run-order trends of ρ and antibody rate within a series | `fig39_run_order_confound.py` |
 | log2F and ΔU per replicate set (alternative summary) | `tccd_log2fc_delta_U.py` |
+
+`dilution_common.py`, `dilution_01_summarize.py` and `dilution_14_replicate_series.py` were copied in on 2026-11-21 for
+Figure S5. Figures S5–S17 of the 11/09 SI are S6–S18 here.
+
+`fig_s4b_local_slope.py` was added on 2026-11-21. It writes Figure S4B with the raw events behind it.
 
 `tccd_acquisition_order.py` was added on 2026-11-09. It regenerates `figures_svg/tccd_acquisition_order.csv` (from
 the start time in each FCS acquisition record), which was previously written outside the scripts. Its output matches the

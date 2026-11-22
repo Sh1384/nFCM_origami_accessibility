@@ -1,7 +1,15 @@
-coating,stem_bp,n,mean,sd
-bare,3,3,0.09591695908988596,0.1789277818411921
-bare,6,3,0.07024677325569963,0.37850538068462897
-bare,12,3,-0.12336337500726331,0.14721413105511225
-PLL-PEG,3,3,0.15362229728871946,0.17097651138827288
-PLL-PEG,6,3,0.16291241965437106,0.11105752630668256
-PLL-PEG,12,3,0.16887868036273415,0.3019557502531155
+group,condition,replicate,median_B525,value
+Bare origami,No antibody,A,60.53540729397413,buffer-subtracted
+Bare origami,No antibody,B,65.49128033198042,buffer-subtracted
+Bare origami,No antibody,C,65.08035087049693,buffer-subtracted
+Bare origami,With antibody,A,128.61388752934124,buffer-subtracted
+Bare origami,With antibody,B,120.05592574264314,buffer-subtracted
+Bare origami,With antibody,C,150.3297991823715,buffer-subtracted
+PLL-PEG coated,No antibody,A,62.83902505343579,buffer-subtracted
+PLL-PEG coated,No antibody,B,64.77820065876828,buffer-subtracted
+PLL-PEG coated,No antibody,C,65.17272152931562,buffer-subtracted
+PLL-PEG coated,With antibody,A,113.56053192334622,buffer-subtracted
+PLL-PEG coated,With antibody,B,103.42905797851728,buffer-subtracted
+PLL-PEG coated,With antibody,C,112.31950392867932,buffer-subtracted
+Buffer,No antibody,,50.51708984375,"raw, Buffer (04/18)"
+Buffer,With antibody,,85.291015625,"raw, antibody only (03/13)"

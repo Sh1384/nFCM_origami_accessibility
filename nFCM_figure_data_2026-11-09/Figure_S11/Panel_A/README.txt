@@ -1,7 +1,7 @@
-Figure S11, panel A: Median antibody signal shift
+Figure S11, panel A: Antibody signal with and without antibody
 
-Plotted: log2 of the median B525-H of origami-gate events of each biotin sample over that of the matched no-biotin sample (same coating and replicate), antibody session; bar mean, error bar SD, points replicates
+Plotted: median B525-H of origami-gate scatter-triggered events without and with anti-biotin IgG (no-biotin origami, antibody session; buffer-subtracted; points are tubes), and for buffer (04/18) and antibody only (03/13) in the uncoated-origami gate (raw)
 
-Source: make_manuscript_figures.py fig13 (figures_svg/fig13_extension_dependence_antibody.csv, column M1_biotin_MFI_shift)
+Source: make_manuscript_figures.py fig08 (figures_svg/fig08_median_b525_with_without_antibody.csv)
 
-Files: Figure_S11_A.svg, Figure_S11_A.csv, Figure_S11_A_samples.csv
+Files: Figure_S11_A.svg, Figure_S11_A.csv

@@ -1,7 +1,7 @@
-Figure S10, panel A: Antibody signal with and without antibody
+Figure S10, panel A: Quadrants, bare and Silica-coated origami
 
-Plotted: median B525-H of origami-gate scatter-triggered events without and with anti-biotin IgG (no-biotin origami, antibody session; buffer-subtracted; points are tubes), and for buffer (04/18) and antibody only (03/13) in the uncoated-origami gate (raw)
+Plotted: percentage of scatter-triggered events in each scatter-fluorescence quadrant (SS+ above the bare-origami 95th percentile of VSSC-1-H, F+ above the bare-origami median V525-H of the batch), buffer-subtracted, tubes pooled
 
-Source: make_manuscript_figures.py fig08 (figures_svg/fig08_median_b525_with_without_antibody.csv)
+Source: make_manuscript_figures.py fig22 (silica_side_scatter/fig22_scatter_fluorescence_quadrants.csv)
 
 Files: Figure_S10_A.svg, Figure_S10_A.csv

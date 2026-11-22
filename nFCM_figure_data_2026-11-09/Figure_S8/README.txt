@@ -1,8 +1,8 @@
 Figure S8
 
-Caption (11/09 draft):
-Figure S8.  (A) Negative-stain TEM (uranyl acetate) of silica-coated origami. (B) Validation of the silica class averages in Figure 3A, as in Figure S7B; the grainier walls required looser sorting cut-offs (Methods).
+Caption (11/09 draft, where this was Figure S7; figure numbers updated):
+Figure S8.  (A) Negative-stain TEM (uranyl acetate) of PLL-PEG-coated origami at several magnifications. (B) Validation of the PLL-PEG class averages in Figure 3A: boxes binned by the contrast of their weakest wall, random half averages with half-set Fourier ring correlation, aligned member particles and reference-free 2D classes (RELION 5).
 
 Panels:
-  A  TEM of silica-coated origami  [image]
-  B  Validation of the silica class averages  [image]
+  A  TEM of PLL-PEG-coated origami  [image]
+  B  Validation of the PLL-PEG class averages  [image]

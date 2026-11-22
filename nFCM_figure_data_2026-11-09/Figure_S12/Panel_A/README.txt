@@ -1,7 +1,7 @@
-Figure S12, panel A: Event rates of buffer, antibody and origami
+Figure S12, panel A: Median antibody signal shift
 
-Plotted: events per second of buffer (03/13), antibody only (03/13) and bare origami without antibody (04/18, tubes A to C; bar mean, points tubes) for all events, scatter-triggered (SS+), fluorescence-triggered (SS− and AB+) and SS >= 200 with B525-H >= 250 (SS+ and AB+)
+Plotted: log2 of the median B525-H of origami-gate events of each biotin sample over that of the matched no-biotin sample (same coating and replicate), antibody session; bar mean, error bar SD, points replicates
 
-Source: make_manuscript_figures.py fig10 (figures_svg/fig10_free_antibody_rates.csv)
+Source: make_manuscript_figures.py fig13 (figures_svg/fig13_extension_dependence_antibody.csv, column M1_biotin_MFI_shift)
 
-Files: Figure_S12_A.svg, Figure_S12_A.csv
+Files: Figure_S12_A.svg, Figure_S12_A.csv, Figure_S12_A_samples.csv

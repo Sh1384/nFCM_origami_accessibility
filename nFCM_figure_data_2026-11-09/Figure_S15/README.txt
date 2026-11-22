@@ -1,8 +1,7 @@
 Figure S15
 
-Caption (11/09 draft):
-Figure S15. Streptavidin alone produces events that are positive for both side scatter and fluorescence. (A) Density plot of Alexa Fluor 488 signal (B525-H) versus violet side scatter (VSSC-1-H) for streptavidin without origami. (B) Event rates of streptavidin only and buffer for all events, events positive for both side scatter and streptavidin fluorescence (SS+ and SA+), side-scatter-positive events (SS+), and side-scatter-negative, streptavidin-positive events (SS− and SA+).
+Caption (11/09 draft, where this was Figure S14; figure numbers updated):
+Figure S15. Silica-coated DNA origami show no specific binding relative to the no-biotin control; however, the results are confounded by silica particulates in solution.
 
 Panels:
-  A  Streptavidin only: B525-H vs side scatter  [data]
-  B  Streptavidin only: event rates  [data]
+  A  Silica-coated origami: coincidence excess  [data]

@@ -1,7 +1,7 @@
 Figure S6
 
-Caption (11/09 draft):
-Figure S6. A gel retardation assay across different nitrogen to phosphate (N:P) ratios was conducted to measure binding of PLL-PEG on Pandora Box. An N:P ratio of 1.5 was chosen due to visible band for origami while higher ratios showed significant aggregation in the well.
+Caption (11/09 draft, where this was Figure S5; figure numbers updated):
+Figure S6. Excitation and emission spectra of ATTO 425, the fluorophore attached to the DNA origami, and the transmission band of the 525/50 emission filter of the instrument. Data from fpbase.org.
 
 Panels:
-  A  PLL-PEG gel retardation assay  [image]
+  A  ATTO 425 spectra and the 525/50 band  [image]

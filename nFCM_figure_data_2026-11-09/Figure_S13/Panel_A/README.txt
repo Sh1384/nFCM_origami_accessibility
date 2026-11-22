@@ -1,7 +1,7 @@
-Figure S13, panel A: Observed-to-chance coincidence of origami and antibody
+Figure S13, panel A: Event rates of buffer, antibody and origami
 
-Plotted: observed coincident events over the chance expectation (Equation 1) for each antibody sample, bare and PLL-PEG, without biotin (N) and with 3, 6 or 12 bp stems; bar mean, error bar SD, points replicates (one PLL-PEG 12 bp sample without detectable origami excluded)
+Plotted: events per second of buffer (03/13), antibody only (03/13) and bare origami without antibody (04/18, tubes A to C; bar mean, points tubes) for all events, scatter-triggered (SS+), fluorescence-triggered (SS− and AB+) and SS >= 200 with B525-H >= 250 (SS+ and AB+)
 
-Source: fig29_tccd_coincidence.py (figures_svg/fig29_tccd_coincidence_samples.csv, column obs_exp_deficit)
+Source: make_manuscript_figures.py fig10 (figures_svg/fig10_free_antibody_rates.csv)
 
-Files: Figure_S13_A.svg, Figure_S13_A.csv, Figure_S13_A_samples.csv
+Files: Figure_S13_A.svg, Figure_S13_A.csv

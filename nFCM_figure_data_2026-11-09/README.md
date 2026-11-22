@@ -1,13 +1,38 @@
 # Figure data for the 2026-11-09 draft
 
 These folders hold the figure data for `nFCM_2026-11-09_main_text_JH.docx` (Figures 1–5) and `nFCM_2026-11-09_SI_JH.docx`
-(Figures S1–S17). Table S1 and Note S1 have no figure panels.
+(Figures S1–S18, renumbered as below). Table S1 and Note S1 have no figure panels.
+
+## SI numbering (changed 2026-11-21)
+
+The dilution series was inserted as Figure S5. Every later figure moved up by one, with the same panel letters:
+
+| 11/09 SI | This package |
+|---|---|
+| S1–S4 | S1–S4 |
+| (new: dilution series) | S5 |
+| S5 | S6 |
+| S6 | S7 |
+| S7 | S8 |
+| S8 | S9 |
+| S9 | S10 |
+| S10 | S11 |
+| S11 | S12 |
+| S12 | S13 |
+| S13 | S14 |
+| S14 | S15 |
+| S15 | S16 |
+| S16 | S17 |
+| S17 | S18 |
+
+## Contents
 
 ```
 Figure_<n>/
   README.txt                 caption from the .docx and the list of panels
   Panel_<letter>/
     Figure_<n>_<letter>.svg  the panel
+    Figure_<n>_<letter>.py   the plotting script (S5 only)
     Figure_<n>_<letter>.csv  the plotted values (more tables as Figure_<n>_<letter>_<name>.csv)
     README.txt               what is plotted, how it was computed, source script, notes
 panel_index.csv              every panel, with its files, source and notes
@@ -16,12 +41,12 @@ code/                        the scripts that compute the data (see code/README.
 
 There are two kinds of panel:
 
-- **Data panels (34).** The data are recomputed from the FCS files, or taken from the tables of the analysis scripts, and
+- **Data panels (36).** The data are recomputed from the FCS files, or taken from the tables of the analysis scripts, and
   the panel is redrawn as SVG. The CSV holds the plotted values as they are, with no fitting or rescaling to match the
   manuscript artwork. The SVGs show the same data as the manuscript panels but are not styled to match them exactly.
 - **Image panels (21).** These are schematics, micrographs, gels, the scadnano design and the spectra. They are cut from the
   figure images in the .docx and saved as SVG with the image embedded. They have no CSV: 1A–D, 2A, 3A, 3B, 3F, 4A, 5A, S1,
-  S2, S3A–C, S5, S6, S7A–B and S8A–B.
+  S2, S3A–C, S6, S7, S8A–B and S9A–B.
 
 Conventions:
 
@@ -29,7 +54,8 @@ Conventions:
 - Replicates A to C are tubes.
 - Origami events are scatter-triggered (VSSC-1-H ≥ 200).
 - The antibody channel is B525-H ≥ 250.
-- Acquisitions above 7,000 events/s are excluded. There are four, all silica with probe.
+- Acquisitions above 7,000 events/s are excluded. There are four, all silica with probe. The dilution series (S5) is the
+  one exception: it keeps all 36 tubes, five of which are above 7,000 events/s.
 
 ## Choices and differences found while rebuilding the panels
 
@@ -38,6 +64,11 @@ Conventions:
   exponent in 3F and 3H, are the values of the 11/09 text. On the raw events, the slope at the threshold is 4.4 in batch 2
   and 5.6 in batch 1 (`nFCM Manuscript/figures_svg/checks_11_08/fig41d`).
 - **2E.** Bins of 10 are centred on 0 to 200, as % of the events in that range, which reproduces the manuscript curves.
+- **S4B.** Added on 2026-11-21 and not in the 11/09 SI: the local slope of the cumulative side-scatter curve, with the raw
+  events behind it (`Figure_S4_B_raw_events.csv`).
+- **S5.** Added on 2026-11-21. The SVG is `dilution_D18_replicate_series_fits.svg` without the tube labels. Without the five
+  tubes above 7,000 events/s, the slopes would be 0.47, 0.47 and 0.52 (0.48, 0.48 and 0.52 as plotted). The lowest
+  concentration is 161 fM.
 - **3C, 3D.** The dashed curves use the caption coefficients (3.49 and 0.561). A least-squares fit of (1 + a·x)² to the same
   ADDA points gives 3.45 and 0.58, so the caption coefficients were not obtained this way. Both curves are in `_curves.csv`.
 - **3G.** The rates are buffer-subtracted (33.75 and 59.37 events/s). They match the Prism table you pasted.
@@ -48,5 +79,5 @@ Conventions:
 - **5C.** I used bins of 20 from the trigger; the first bar is 25,808 events. The manuscript bars are narrower (first bar
   about 20,000) and their bin width is not recorded.
 - **5F.** The per-origami ΔU is 0.745 ± 0.342 kT. The text rounds it to 0.75.
-- **3B, S3B, S5.** The wall-profile table, the box counts and the fpbase spectra are not in these files. If you add them,
+- **3B, S3B, S6.** The wall-profile table, the box counts and the fpbase spectra are not in these files. If you add them,
   these panels can get a CSV too.

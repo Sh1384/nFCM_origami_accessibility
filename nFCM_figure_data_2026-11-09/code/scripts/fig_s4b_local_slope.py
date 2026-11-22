@@ -100,7 +100,7 @@ def plot(d):
     ax.set_xticks([200, 250, 300, 400, 500]); ax.set_xticklabels(['200', '250', '300', '400', '500'])
     ax.xaxis.set_minor_locator(NullLocator())
     ax.set_ylim(0, 6.5); ax.set_yticks(range(7))
-    ax.set_xlabel('VSSC-1-H, s'); ax.set_ylabel('Local slope, −d ln N(≥s) / d ln s')
+    ax.set_xlabel('VSSC-1-H, s'); ax.set_ylabel('Local log–log slope')
     ax.legend(fontsize=6.5, loc='lower left', handlelength=2.6)
     fig.tight_layout()
     return fig

@@ -6,7 +6,7 @@ Figure 4. (A) How populations appear in side scatter versus ATTO 425: particulat
 Panels:
   A  Reading scatter vs fluorescence (schematic)  [image]
   B  Silica-coated origami (batch 2, replicate A)  [data]
-  C  PLL-PEG-coated origami (batch 2, replicate C)  [data]
+  C  PLL-PEG-coated origami (batch 2, replicate A)  [data]
   D  Silica, batch 1  [data]
   E  Silica, batch 2  [data]
   F  PLL-PEG, batch 1  [data]

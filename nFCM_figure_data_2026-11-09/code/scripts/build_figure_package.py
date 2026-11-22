@@ -406,8 +406,8 @@ def dot_panel(fig_id, p, d, title, how, guides=False):
 def fig4():
     dot_panel('4', 'B', tube(B2, 'Silica', 'A'), 'Silica-coated origami (batch 2, replicate A)',
               'VSSC-1-H vs V525-H of every scatter-triggered event of Shervin4_18/N_Silica_NoAB_A.fcs (no probe)')
-    dot_panel('4', 'C', tube(B2, 'PLL', 'C'), 'PLL-PEG-coated origami (batch 2, replicate C)',
-              'VSSC-1-H vs V525-H of every scatter-triggered event of Shervin4_18/N_PLL_NoAB_C.fcs (no probe), with guides of '
+    dot_panel('4', 'C', tube(B2, 'PLL', 'A'), 'PLL-PEG-coated origami (batch 2, replicate A)',
+              'VSSC-1-H vs V525-H of every scatter-triggered event of Shervin4_18/N_PLL_NoAB_A.fcs (no probe), with guides of '
               'slope 1 and 1/2 through the median V525-H of events at VSSC-1-H 800 to 1,250', guides=True)
     S = read('fig06_silica_scatter_vs_v525_median_v525_by_ss.csv')
     Pl = read(os.path.join('pll_peg_side_scatter', 'fig21_pll_side_scatter_confident_origami_median_v525_by_ss.csv'))

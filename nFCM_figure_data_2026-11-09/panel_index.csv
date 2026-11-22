@@ -18,7 +18,7 @@ figure,panel,title,kind,svg,csv,source,note
 3,H,Scatter gain allowed by the event rate,data,Figure_3\Panel_H\Figure_3_H.svg,Figure_3\Panel_H\Figure_3_H.csv;Figure_3\Panel_H\Figure_3_H_curve.csv,build_figure_package.py fig3,Uses the exponent 3.7 of the 11/09 text; see Figure 2C note.
 4,A,Reading scatter vs fluorescence (schematic),image,Figure_4\Panel_A\Figure_4_A.svg,,figure image in the .docx,
 4,B,"Silica-coated origami (batch 2, replicate A)",data,Figure_4\Panel_B\Figure_4_B.svg,Figure_4\Panel_B\Figure_4_B.csv,build_figure_package.py fig4,
-4,C,"PLL-PEG-coated origami (batch 2, replicate C)",data,Figure_4\Panel_C\Figure_4_C.svg,Figure_4\Panel_C\Figure_4_C.csv;Figure_4\Panel_C\Figure_4_C_guides.csv,build_figure_package.py fig4,
+4,C,"PLL-PEG-coated origami (batch 2, replicate A)",data,Figure_4\Panel_C\Figure_4_C.svg,Figure_4\Panel_C\Figure_4_C.csv;Figure_4\Panel_C\Figure_4_C_guides.csv,build_figure_package.py fig4,
 4,D,"Silica, batch 1",data,Figure_4\Panel_D\Figure_4_D.svg,Figure_4\Panel_D\Figure_4_D.csv,make_manuscript_figures.py fig06 (silica) and fig21 (PLL-PEG; buffer curve),
 4,E,"Silica, batch 2",data,Figure_4\Panel_E\Figure_4_E.svg,Figure_4\Panel_E\Figure_4_E.csv,make_manuscript_figures.py fig06 (silica) and fig21 (PLL-PEG; buffer curve),
 4,F,"PLL-PEG, batch 1",data,Figure_4\Panel_F\Figure_4_F.svg,Figure_4\Panel_F\Figure_4_F.csv,make_manuscript_figures.py fig06 (silica) and fig21 (PLL-PEG; buffer curve),

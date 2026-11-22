@@ -74,8 +74,9 @@ Conventions:
 - **3G.** The rates are buffer-subtracted (33.75 and 59.37 events/s). They match the Prism table you pasted.
 - **4B.** The caption does not say which tube is plotted. I used batch 2, replicate A (`N_Silica_NoAB_A`), the only silica
   tube with the saturated cluster at the top right of the panel. Consider adding "(batch 2)" to the caption.
-- **4C.** Batch 2, replicate C (`N_PLL_NoAB_C`), the tube in the earlier 4C density table. The guides of slope 1 and ½ pass
-  through the median V525-H at VSSC-1-H 800–1,250.
+- **4C.** Batch 2, replicate A (`N_PLL_NoAB_A`), the tube in the manuscript panel: only replicate A has the bright
+  high-scatter arm (2.3% of its events, against 0.03% and 0.10% in B and C). Until 2026-11-22 this panel used replicate C
+  by mistake. The guides of slope 1 and ½ pass through the median V525-H at VSSC-1-H 800–1,250.
 - **5C.** I used bins of 20 from the trigger; the first bar is 25,808 events. The manuscript bars are narrower (first bar
   about 20,000) and their bin width is not recorded.
 - **5F.** The per-origami ΔU is 0.745 ± 0.342 kT. The text rounds it to 0.75.

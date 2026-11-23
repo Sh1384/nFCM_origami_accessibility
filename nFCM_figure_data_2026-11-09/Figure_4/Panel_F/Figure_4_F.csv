@@ -1,0 +1,57 @@
+batch,curve,sample,ss_bin_center,median_V525
+batch 1,Bare,Uncoated origami (buffer-subtracted),249.7018623923161,62.74197653948314
+batch 1,Bare,Uncoated origami (buffer-subtracted),389.2291459145959,74.26730112254708
+batch 1,Bare,Uncoated origami (buffer-subtracted),606.7208573373771,84.83183407905194
+batch 1,Bare,Uncoated origami (buffer-subtracted),945.741609003176,94.04881560958498
+batch 1,Bare,Uncoated origami (buffer-subtracted),1474.19885138802,87.16609755191337
+batch 1,Bare,Uncoated origami (buffer-subtracted),2297.9450547009387,78.52254145852214
+batch 1,Bare,Uncoated origami (buffer-subtracted),3581.9804563357525,75.73024764252241
+batch 1,Bare,Uncoated origami (buffer-subtracted),5583.503384175172,85.1745244600119
+batch 1,Bare,Uncoated origami (buffer-subtracted),8703.428290892218,
+batch 1,Bare,Uncoated origami (buffer-subtracted),13566.690803733278,
+batch 1,Bare,Uncoated origami (buffer-subtracted),21147.425268811287,
+batch 1,Bare,Uncoated origami (buffer-subtracted),32964.088440557214,
+batch 1,Bare,Uncoated origami (buffer-subtracted),51383.61350870768,
+batch 1,Bare,Uncoated origami (buffer-subtracted),80095.51794442459,
+batch 1,PLL-PEG-coated,PLL-PEG origami (buffer-subtracted),249.7018623923161,64.87011718623634
+batch 1,PLL-PEG-coated,PLL-PEG origami (buffer-subtracted),389.2291459145959,76.23597683610735
+batch 1,PLL-PEG-coated,PLL-PEG origami (buffer-subtracted),606.7208573373771,87.86681606951035
+batch 1,PLL-PEG-coated,PLL-PEG origami (buffer-subtracted),945.741609003176,99.69049946814216
+batch 1,PLL-PEG-coated,PLL-PEG origami (buffer-subtracted),1474.19885138802,99.18115477543796
+batch 1,PLL-PEG-coated,PLL-PEG origami (buffer-subtracted),2297.9450547009387,98.6916879584678
+batch 1,PLL-PEG-coated,PLL-PEG origami (buffer-subtracted),3581.9804563357525,79.46707718617633
+batch 1,PLL-PEG-coated,PLL-PEG origami (buffer-subtracted),5583.503384175172,
+batch 1,PLL-PEG-coated,PLL-PEG origami (buffer-subtracted),8703.428290892218,
+batch 1,PLL-PEG-coated,PLL-PEG origami (buffer-subtracted),13566.690803733278,
+batch 1,PLL-PEG-coated,PLL-PEG origami (buffer-subtracted),21147.425268811287,
+batch 1,PLL-PEG-coated,PLL-PEG origami (buffer-subtracted),32964.088440557214,
+batch 1,PLL-PEG-coated,PLL-PEG origami (buffer-subtracted),51383.61350870768,
+batch 1,PLL-PEG-coated,PLL-PEG origami (buffer-subtracted),80095.51794442459,
+batch 1,PLL-PEG only,PLL-PEG only (raw),249.7018623923161,46.3271484375
+batch 1,PLL-PEG only,PLL-PEG only (raw),389.2291459145959,57.26416015625
+batch 1,PLL-PEG only,PLL-PEG only (raw),606.7208573373771,62.603515625
+batch 1,PLL-PEG only,PLL-PEG only (raw),945.741609003176,62.72900390625
+batch 1,PLL-PEG only,PLL-PEG only (raw),1474.19885138802,63.472412109375
+batch 1,PLL-PEG only,PLL-PEG only (raw),2297.9450547009387,64.04638671875
+batch 1,PLL-PEG only,PLL-PEG only (raw),3581.9804563357525,63.99560546875
+batch 1,PLL-PEG only,PLL-PEG only (raw),5583.503384175172,64.46337890625
+batch 1,PLL-PEG only,PLL-PEG only (raw),8703.428290892218,65.622802734375
+batch 1,PLL-PEG only,PLL-PEG only (raw),13566.690803733278,63.92578125
+batch 1,PLL-PEG only,PLL-PEG only (raw),21147.425268811287,62.00146484375
+batch 1,PLL-PEG only,PLL-PEG only (raw),32964.088440557214,66.1494140625
+batch 1,PLL-PEG only,PLL-PEG only (raw),51383.61350870768,71.161865234375
+batch 1,PLL-PEG only,PLL-PEG only (raw),80095.51794442459,64.98095703125
+batch 1,Buffer,Buffer (raw),249.7018623923161,42.93798828125
+batch 1,Buffer,Buffer (raw),389.2291459145959,52.51904296875
+batch 1,Buffer,Buffer (raw),606.7208573373771,54.23681640625
+batch 1,Buffer,Buffer (raw),945.741609003176,62.5166015625
+batch 1,Buffer,Buffer (raw),1474.19885138802,58.5234375
+batch 1,Buffer,Buffer (raw),2297.9450547009387,62.09375
+batch 1,Buffer,Buffer (raw),3581.9804563357525,66.1357421875
+batch 1,Buffer,Buffer (raw),5583.503384175172,58.33935546875
+batch 1,Buffer,Buffer (raw),8703.428290892218,61.4521484375
+batch 1,Buffer,Buffer (raw),13566.690803733278,68.26171875
+batch 1,Buffer,Buffer (raw),21147.425268811287,60.6103515625
+batch 1,Buffer,Buffer (raw),32964.088440557214,68.583740234375
+batch 1,Buffer,Buffer (raw),51383.61350870768,
+batch 1,Buffer,Buffer (raw),80095.51794442459,

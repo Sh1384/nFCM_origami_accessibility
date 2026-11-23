@@ -1,0 +1,7 @@
+estimate,method,replicate_set,delta_U_kT,stems_bp
+per antibody,From log2FC,A,0.65990577709748,"3, 6, 12"
+per antibody,From log2FC,B,0.0642847063491441,"3, 6, 12"
+per antibody,From log2FC,C,0.0562594839729062,"3, 6"
+per origami,From excess,A,1.0940266456750831,"3, 6, 12"
+per origami,From excess,B,0.730089213597514,"3, 6, 12"
+per origami,From excess,C,0.4107890612765419,"3, 6"

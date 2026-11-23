@@ -1,0 +1,9 @@
+batch,coating,replicate,file,median_VSSC1H
+batch 1,Buffer,,Shervin5_25/Buffer.fcs,216.36572265625
+batch 1,bare,A,Shervin5_25/N_NoCoating_NoS_A.fcs,224.630126953125
+batch 1,bare,B,Shervin5_25/N_NoCoating_NoS_B.fcs,225.1044921875
+batch 1,bare,C,Shervin5_25/N_NoCoating_NoS_C.fcs,228.3212890625
+batch 2,Buffer,,Shervin4_18/Buffer.fcs,223.412109375
+batch 2,bare,A,Shervin4_18/N_NoCoating_NoAB_A.fcs,229.968017578125
+batch 2,bare,B,Shervin4_18/N_NoCoating_NoAB_B.fcs,237.75732421875
+batch 2,bare,C,Shervin4_18/N_NoCoating_NoAB_C.fcs,232.5810546875

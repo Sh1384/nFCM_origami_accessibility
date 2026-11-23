@@ -1,0 +1,3 @@
+sample,file,acq_time_s,scatter_triggered_events,scatter_triggered_events_per_s,events_with_V525_le_0_not_plotted
+Buffer,Shervin4_18/Buffer.fcs,67.2934341430664,3995,59.366861728390866,0
+Bare origami,Shervin4_18/N_NoCoating_NoAB_B.fcs,79.54793548583984,112015,1408.1446528544986,0
